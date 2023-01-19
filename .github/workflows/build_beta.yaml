@@ -30,7 +30,7 @@ jobs:
           push: true
           pull: true
           no-cache: true
-          file: {context}/greenplum-operator/Dockerfile
+          file: greenplum-operator/Dockerfile
           build-args: |
             PLAID_BUILD_TAG=${{ steps.docker_tag.outputs.tag }}
           tags: gcr.io/plaidcloud-build/greenplum-operator:latest,gcr.io/plaidcloud-build/greenplum-operator:${{ github.ref_name }}-${{ github.run_number }}
