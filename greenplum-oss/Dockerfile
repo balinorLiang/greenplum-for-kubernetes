@@ -4,10 +4,10 @@ COPY greenplum-oss/ /greenplum-for-kubernetes/greenplum-oss/
 
 WORKDIR /greenplum-for-kubernetes/greenplum-oss
 
-RUN chmod +x ./install.bash \
- && set debconf to Noninteractive \
- && echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
- && ./install.bash
+#RUN chmod +x ./install.bash \
+# && set debconf to Noninteractive \
+# && echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
+# && ./install.bash
 
 #RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y \
 # && apt-get update \
