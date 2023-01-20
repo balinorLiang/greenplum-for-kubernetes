@@ -11,9 +11,12 @@ apt-get install -y \
 	gcc \
 	g++ \
 	inetutils-ping \
+    iproute2 \
+    iputils-ping \
 	krb5-kdc \
 	krb5-admin-server \
 	libapr1-dev \
+    libaprutil1 \
 	libbz2-dev \
 	libcurl4-gnutls-dev \
 	libevent-dev \
@@ -38,6 +41,7 @@ apt-get install -y \
 	python3-psutil \
 	python3-pygresql \
 	python3-yaml \
+    rsync \
     wget \
     zip \
 	zlib1g-dev
