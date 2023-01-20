@@ -11,6 +11,8 @@ apt-get install -y \
 	gcc \
 	g++ \
 	inetutils-ping \
+    iproute2 \
+    iputils-ping \
 	krb5-kdc \
 	krb5-admin-server \
 	libapr1-dev \
@@ -39,6 +41,7 @@ apt-get install -y \
 	python3-pygresql \
 	python3-yaml \
     wget \
+    zip \
 	zlib1g-dev
 
 tee -a /etc/sysctl.conf << EOF
