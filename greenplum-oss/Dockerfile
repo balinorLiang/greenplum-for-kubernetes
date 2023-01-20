@@ -1,13 +1,7 @@
 FROM ubuntu:18.04
 
-COPY greenplum-oss/ /greenplum-for-kubernetes/greenplum-oss/
-
-WORKDIR /greenplum-for-kubernetes/greenplum-oss
-
 RUN apt-get update \
- && apt-get install -y libapr1 libaprutil1 krb5-multidev libcurl3-gnutls libcurl4 libevent-2.1-6 libreadline7 libxml2 libyaml-0-2 libldap-2.4-2 openssh-client openssh-server perl rsync zip net-tools less iproute2 iputils-ping locales \
- && chmod +x sysconf.bash \
- && ./sysconf.bash
+ && apt-get install -y libapr1 libaprutil1 krb5-multidev libcurl3-gnutls libcurl4 libevent-2.1-6 libreadline7 libxml2 libyaml-0-2 libldap-2.4-2 openssh-client openssh-server perl rsync zip net-tools less iproute2 iputils-ping locales
 
 RUN apt-get update \
  && apt-get install -y wget \
