@@ -11,8 +11,6 @@ apt-get install -y \
 	gcc \
 	g++ \
 	inetutils-ping \
-    iproute2 \
-    iputils-ping \
 	krb5-kdc \
 	krb5-admin-server \
 	libapr1-dev \
