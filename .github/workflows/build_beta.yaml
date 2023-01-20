@@ -2,7 +2,7 @@ name: Beta RPC Service Build and Deploy
 on:
   push:
     branches:
-      - add_actions
+      - add_actionsxxxxxxx
 jobs:
   build-beta:
     name: Beta Deployment
