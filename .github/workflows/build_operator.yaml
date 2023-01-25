@@ -2,12 +2,12 @@ name: Build OSS Greenplum Ubuntu Image
 on:
   push:
     branches:
-      - build-greenplum*
+      - build-operator*
 jobs:
   build-greenplum-image:
-    name: Greenplum OSS Image Build
+    name: Greenplum Operator Image Build
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 10
     steps:
       - name: Create tag
         id: docker_tag
@@ -30,7 +30,7 @@ jobs:
           push: true
           pull: true
           no-cache: true
-          file: greenplum-oss/Dockerfile
+          file: greenplum-operator/Dockerfile
           build-args: |
             PLAID_BUILD_TAG=${{ steps.docker_tag.outputs.tag }}
-          tags: gcr.io/plaidcloud-build/greenplum-oss:latest,gcr.io/plaidcloud-build/greenplum-oss:${{ github.ref_name }}-${{ github.run_number }}
+          tags: gcr.io/plaidcloud-build/greenplum-operator:latest,gcr.io/plaidcloud-build/greenplum-operator:${{ github.ref_name }}-${{ github.run_number }}
