@@ -22,7 +22,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     ./cmd/waitForKnownHosts
 
 # build greenplum-instance image from here
-FROM gcr.io/gp-kubernetes/ubuntu-gpdb-ent:${TAG_PREFIX}${GREENPLUM_VERSION}
+FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 
 # remove gppkg because it's misleading to users in the kubernetes environment
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
@@ -87,10 +87,10 @@ EXPOSE 22
 
 ARG VERSION=dev
 ARG DATE=unknown
-ARG LICENSE="https://network.pivotal.io/legal_documents/vmware_eula"
+ARG LICENSE="https://www.apache.org/licenses/LICENSE-2.0"
 
 LABEL name="Greenplum for Kubernetes" \
-    vendor="Pivotal Software" \
+    vendor="PlaidCloud" \
     version="${VERSION}" \
     build_date="${DATE}" \
     license="${LICENSE}"
