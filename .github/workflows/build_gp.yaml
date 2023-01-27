@@ -1,13 +1,13 @@
-name: Build OSS Greenplum Ubuntu Image
+name: Build GP4K Greenplum Ubuntu Image
 on:
   push:
     branches:
-      - build-greenplum*
+      - build-gp*
 jobs:
   build-greenplum-image:
-    name: Greenplum OSS Image Build
+    name: Greenplum GP4K Image Build
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 10
     steps:
       - name: Create tag
         id: docker_tag
@@ -33,4 +33,4 @@ jobs:
           file: greenplum-oss/Dockerfile
           build-args: |
             PLAID_BUILD_TAG=${{ steps.docker_tag.outputs.tag }}
-          tags: gcr.io/plaidcloud-build/greenplum-oss:latest,gcr.io/plaidcloud-build/greenplum-oss:${{ github.ref_name }}-${{ github.run_number }}
+          tags: gcr.io/plaidcloud-build/greenplum-gp4k:latest,gcr.io/plaidcloud-build/greenplum-gp4k:${{ github.ref_name }}-${{ github.run_number }}
