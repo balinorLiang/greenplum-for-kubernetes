@@ -3,6 +3,7 @@ ARG TAG_PREFIX=""
 ARG GREENPLUM_VERSION=unknown
 FROM golang:1.19 as build-in-docker
 
+
 COPY greenplum-instance/ /greenplum-for-kubernetes/greenplum-instance/
 COPY greenplum-operator/ /greenplum-for-kubernetes/greenplum-operator/
 COPY pkg/ /greenplum-for-kubernetes/pkg/
