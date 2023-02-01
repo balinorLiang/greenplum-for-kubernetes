@@ -81,7 +81,8 @@ WORKDIR /home/gpadmin
 RUN ln -s ${TOOLS_DIR} /home/gpadmin/tools
 
 RUN ls /usr/local
-RUN ls /usr/local/greenplum-db
+RUN ls /usr/local/gpdb
+RUN ls /usr/local/pxf
 
 # Initialize pxf directories; needs GPHOME set
 RUN /bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh && /usr/local/pxf-gp6/bin/pxf init'
