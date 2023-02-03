@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - build-operator*
+      - build-all*
 jobs:
   build-greenplum-image:
     name: Greenplum Operator Image Build

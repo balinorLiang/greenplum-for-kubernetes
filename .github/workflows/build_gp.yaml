@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - build-gp*
+      - build-all*
 jobs:
   build-greenplum-image:
     name: Greenplum GP4K Image Build
