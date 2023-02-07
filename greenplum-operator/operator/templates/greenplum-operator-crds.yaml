@@ -72,6 +72,9 @@ spec:
                       3.5, etc.
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
+                  schedulerName:
+                    description: Name of scheduler to use for statefulset pods
+                    type: string
                   standby:
                     default: "no"
                     description: YES or NO, specify whether or not to deploy a standby
@@ -143,6 +146,9 @@ spec:
                     maximum: 10000
                     minimum: 1
                     type: integer
+                  schedulerName:
+                    description: Name of scheduler to use for statefulset pods
+                    type: string
                   storage:
                     anyOf:
                     - type: integer

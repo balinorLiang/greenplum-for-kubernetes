@@ -40,6 +40,9 @@ type GreenplumPodSpec struct {
 	// +kubebuilder:default="no"
 	// +kubebuilder:validation:Pattern=`^(?:yes|Yes|YES|no|No|NO|)$`
 	AntiAffinity string `json:"antiAffinity,omitempty"`
+
+	// Name of scheduler to be used for statefulset pods
+	SchedulerName string `json:"schedulerName,omitempty`
 }
 
 type GreenplumMasterAndStandbySpec struct {

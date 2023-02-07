@@ -98,6 +98,9 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 		templateSpec.Affinity = getAffinityDefinition(params.Type, sset.Namespace)
 	}
 	templateSpec.ServiceAccountName = "greenplum-system-pod"
+	if len(params.GpPodSpec.SchedulerName) > 0 {
+		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
+	}
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
