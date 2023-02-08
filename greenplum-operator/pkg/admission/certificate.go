@@ -120,6 +120,7 @@ func (g *CertificateGenerator) GenerateCertificateSigningRequest(cert []byte) ce
 				certificates.UsageServerAuth,
 			},
 			Request: cert,
+			SignerName: "kubernetes.io/kube-apiserver-client-kubelet",
 		},
 	}
 }
