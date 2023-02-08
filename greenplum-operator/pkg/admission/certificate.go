@@ -84,6 +84,7 @@ func (g *CertificateGenerator) ApproveCertificateSigningRequest(csr *v1.Certific
 	approvalCondition := certificates.CertificateSigningRequestCondition{
 		Type:    certificates.CertificateApproved,
 		Reason:  "AutoApproved",
+		Status: "True",
 		Message: "certificate approved by Greenplum Operator",
 	}
 	csr.Status.Conditions = append(csr.Status.Conditions, approvalCondition)
