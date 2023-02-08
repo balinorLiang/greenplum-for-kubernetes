@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
-	"k8s.io/api/certificates/v1beta1"
-	certificates "k8s.io/api/certificates/v1beta1"
+	"k8s.io/api/certificates/v1"
+	certificates "k8s.io/api/certificates/v1"
 	apierrs "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -29,9 +29,9 @@ const (
 
 type CertGenerator interface {
 	GenerateX509CertificateSigningRequest(commonName string) (*rsa.PrivateKey, []byte, error)
-	CreateCertificateSigningRequest(cert []byte) (*v1beta1.CertificateSigningRequest, error)
-	ApproveCertificateSigningRequest(csr *v1beta1.CertificateSigningRequest) (*v1beta1.CertificateSigningRequest, error)
-	WaitForSignedCertificate(csr *v1beta1.CertificateSigningRequest, timeout time.Duration) ([]byte, error)
+	CreateCertificateSigningRequest(cert []byte) (*v1.CertificateSigningRequest, error)
+	ApproveCertificateSigningRequest(csr *v1.CertificateSigningRequest) (*v1.CertificateSigningRequest, error)
+	WaitForSignedCertificate(csr *v1.CertificateSigningRequest, timeout time.Duration) ([]byte, error)
 	GetCertificate(cert []byte, key *rsa.PrivateKey) (tls.Certificate, error)
 }
 
@@ -61,7 +61,7 @@ func (g *CertificateGenerator) GenerateX509CertificateSigningRequest(commonName 
 	return rsaKey, pemEncodedCSR, err
 }
 
-func (g *CertificateGenerator) CreateCertificateSigningRequest(csrPEM []byte) (*v1beta1.CertificateSigningRequest, error) {
+func (g *CertificateGenerator) CreateCertificateSigningRequest(csrPEM []byte) (*v1.CertificateSigningRequest, error) {
 	csr := g.GenerateCertificateSigningRequest(csrPEM)
 	if err := controllerutil.SetControllerReference(g.Owner, &csr, scheme.Scheme); err != nil {
 		return nil, err
@@ -80,17 +80,17 @@ func (g *CertificateGenerator) CreateCertificateSigningRequest(csrPEM []byte) (*
 	return &csr, nil
 }
 
-func (g *CertificateGenerator) ApproveCertificateSigningRequest(csr *v1beta1.CertificateSigningRequest) (*v1beta1.CertificateSigningRequest, error) {
+func (g *CertificateGenerator) ApproveCertificateSigningRequest(csr *v1.CertificateSigningRequest) (*v1.CertificateSigningRequest, error) {
 	approvalCondition := certificates.CertificateSigningRequestCondition{
 		Type:    certificates.CertificateApproved,
 		Reason:  "AutoApproved",
 		Message: "certificate approved by Greenplum Operator",
 	}
 	csr.Status.Conditions = append(csr.Status.Conditions, approvalCondition)
-	return g.KubeClientSet.CertificatesV1beta1().CertificateSigningRequests().UpdateApproval(context.Background(), csr, metav1.UpdateOptions{})
+	return g.KubeClientSet.CertificatesV1().CertificateSigningRequests().UpdateApproval(context.Background(), csr.Name, csr, metav1.UpdateOptions{})
 }
 
-func (g *CertificateGenerator) WaitForSignedCertificate(csr *v1beta1.CertificateSigningRequest, timeout time.Duration) ([]byte, error) {
+func (g *CertificateGenerator) WaitForSignedCertificate(csr *v1.CertificateSigningRequest, timeout time.Duration) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	// return k8scsr.WaitForCertificate(ctx, g.KubeClientSet.CertificatesV1beta1().CertificateSigningRequests(), csr)
