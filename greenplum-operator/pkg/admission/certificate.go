@@ -121,7 +121,7 @@ func (g *CertificateGenerator) GenerateCertificateSigningRequest(cert []byte) ce
 				certificates.UsageServerAuth,
 			},
 			Request: cert,
-			SignerName: "known-bad-signer-name",
+			SignerName: "example.com/known-bad-signer-name",
 		},
 	}
 }
