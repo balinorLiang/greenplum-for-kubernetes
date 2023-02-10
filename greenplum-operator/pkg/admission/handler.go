@@ -9,10 +9,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	greenplumv1 "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/api/v1"
-	greenplumv1beta1 "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/api/v1beta1"
 	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/executor"
 	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
-	admissionv1beta1 "k8s.io/api/admission/v1beta1"
+	admissionv1 "k8s.io/api/admission/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/rest"
@@ -56,10 +55,10 @@ func (h *Handler) HandleValidate(out http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	var reviewResponse admissionv1beta1.AdmissionReview
-	reviewResponse.Response = func() (response *admissionv1beta1.AdmissionResponse) {
-		var reviewRequest admissionv1beta1.AdmissionReview
-		response = &admissionv1beta1.AdmissionResponse{}
+	var reviewResponse admissionv1.AdmissionReview
+	reviewResponse.Response = func() (response *admissionv1.AdmissionResponse) {
+		var reviewRequest admissionv1.AdmissionReview
+		response = &admissionv1.AdmissionResponse{}
 		if err := json.Unmarshal(reqBytes, &reviewRequest); err != nil {
 			response.Result = &metav1.Status{Message: "parsing request: " + err.Error()}
 			return
@@ -90,9 +89,9 @@ func (h *Handler) HandleValidate(out http.ResponseWriter, req *http.Request) {
 			}
 			op := reviewRequest.Request.Operation
 			switch op {
-			case admissionv1beta1.Create:
+			case admissionv1.Create:
 				response.Allowed, response.Result = h.validateCreateGreenplumCluster(ctx, newGreenplum)
-			case admissionv1beta1.Update:
+			case admissionv1.Update:
 				if err := json.Unmarshal(reviewRequest.Request.OldObject.Raw, &oldGreenplum); err != nil {
 					response.Result = &metav1.Status{Message: "failed to unmarshal Request.OldObject into GreenplumCluster: " + err.Error()}
 					return
@@ -102,17 +101,17 @@ func (h *Handler) HandleValidate(out http.ResponseWriter, req *http.Request) {
 				response.Allowed = false
 				response.Result = &metav1.Status{Message: "unexpected operation for validation: " + string(op)}
 			}
-		case greenplumv1beta1.GroupVersion.WithKind("GreenplumPXFService"):
+		case greenplumv1.GroupVersion.WithKind("GreenplumPXFService"):
 			op := reviewRequest.Request.Operation
-			var oldPXF, newPXF greenplumv1beta1.GreenplumPXFService
+			var oldPXF, newPXF greenplumv1.GreenplumPXFService
 			if err := json.Unmarshal(reviewRequest.Request.Object.Raw, &newPXF); err != nil {
 				response.Result = &metav1.Status{Message: "failed to unmarshal Request.Object into GreenplumPXFService: " + err.Error()}
 				return
 			}
 			switch op {
-			case admissionv1beta1.Create:
+			case admissionv1.Create:
 				response.Allowed, response.Result = h.validateGreenplumPXFService(ctx, nil, &newPXF)
-			case admissionv1beta1.Update:
+			case admissionv1.Update:
 				if err := json.Unmarshal(reviewRequest.Request.OldObject.Raw, &oldPXF); err != nil {
 					response.Result = &metav1.Status{Message: "failed to unmarshal Request.OldObject into GreenplumPXFService: " + err.Error()}
 					return
