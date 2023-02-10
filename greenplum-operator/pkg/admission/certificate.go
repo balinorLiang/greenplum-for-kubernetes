@@ -48,6 +48,7 @@ func (g *CertificateGenerator) GenerateX509CertificateSigningRequest(commonName 
 	}
 	requestTemplate := x509.CertificateRequest{
 		SignatureAlgorithm: x509.SHA256WithRSA,
+		DNSNames: []string{commonName},
 		Subject: pkix.Name{
 			Organization: []string{Organization},
 			CommonName:   commonName,
