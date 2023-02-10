@@ -89,7 +89,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 	templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
 		{
-			Name: "regsecret",
+			Name: "gcr",
 		},
 	}
 	templateSpec.Containers = modifyGreenplumContainer(params, templateSpec.Containers)
