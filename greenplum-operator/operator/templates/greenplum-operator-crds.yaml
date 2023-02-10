@@ -220,7 +220,7 @@ spec:
       jsonPath: .status.phase
       name: Status
       type: string
-    name: v1beta1
+    name: v1
     schema:
       openAPIV3Schema:
         description: GreenplumPXFService is the Schema for the greenplumpxfservices
