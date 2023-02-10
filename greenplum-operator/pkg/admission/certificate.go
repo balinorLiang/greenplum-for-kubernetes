@@ -121,7 +121,7 @@ func (g *CertificateGenerator) GenerateCertificateSigningRequest(cert []byte) ce
 				certificates.UsageServerAuth,
 			},
 			Request: cert,
-			SignerName: "example.com/known-bad-signer-name",
+			SignerName: "kubernetes.io/legacy-unknown",
 		},
 	}
 }
