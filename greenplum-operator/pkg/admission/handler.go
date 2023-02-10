@@ -1,7 +1,7 @@
 package admission
 
 import (
-	"fmt"
+	// "fmt"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -11,7 +11,7 @@ import (
 
 	greenplumv1 "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/api/v1"
 	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/executor"
-	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
+	// "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
 	admissionv1 "k8s.io/api/admission/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
