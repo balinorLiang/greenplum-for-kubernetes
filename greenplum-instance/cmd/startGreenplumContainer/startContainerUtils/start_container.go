@@ -14,6 +14,7 @@ type GreenplumContainerStarter struct {
 }
 
 func (s *GreenplumContainerStarter) Run(args []string) (status int) {
+	fmt.Fprintf(s.StderrBuffer, "args: %#v", args)
 	if len(args) == 2 && args[1] == "--do-root-startup" {
 		if s.UID != 0 {
 			fmt.Fprintf(s.StderrBuffer, "--do-root-startup was passed, but we are not root")
