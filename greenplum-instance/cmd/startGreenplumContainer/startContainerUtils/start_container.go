@@ -45,6 +45,7 @@ func (s *GreenplumContainerStarter) Run(args []string) (status int) {
 		s.MultidaemonStarter,
 	}
 	for _, step := range starters {
+		fmt.Fprintf(s.StderrBuffer, "running step: %#v", step)
 		if err := step.Run(); err != nil {
 			fmt.Fprintln(s.StderrBuffer, err)
 			return 1
