@@ -40,7 +40,7 @@ func (s *GreenplumContainerStarter) Run(args []string) (status int) {
 	cmd.Stdout = s.StdoutBuffer
 	cmd.Stderr = s.StderrBuffer
 	if err := cmd.Run(); err != nil {
-		fmt.Fprintln(s.StderrBuffer, "Returning nothing because of an error in sudo command run")
+		fmt.Fprintln(s.StderrBuffer, "Returning nothing because of an error in sudo command run: %#v", err)
 		return
 	}
 
