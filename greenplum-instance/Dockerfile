@@ -71,8 +71,8 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
     dpkg -i tini_0.19.0-amd64.deb && \
     rm tini_0.19.0-amd64.deb
-# ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
-ENTRYPOINT ["/bin/bash", "-c", "echo $1; while true; do sleep 30; done; "]
+ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
+# ENTRYPOINT ["/bin/bash", "-c", "echo $1; while true; do sleep 30; done; "]
 
 USER gpadmin
 
@@ -86,11 +86,11 @@ WORKDIR /home/gpadmin
 RUN ln -s ${TOOLS_DIR} /home/gpadmin/tools
 
 RUN ls /usr/local
-RUN ls /usr/local/gpdb
+RUN ls /usr/local/greenplum-db
 RUN ls /usr/local/pxf
 
 # Initialize pxf directories; needs GPHOME set
-RUN /bin/bash -c 'source /usr/local/gpdb/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
+RUN /bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
 
 # USER root
 
