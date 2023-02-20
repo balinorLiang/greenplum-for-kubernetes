@@ -27,7 +27,7 @@ FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 # remove gppkg because it's misleading to users in the kubernetes environment
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
 
-RUN apt-get -y install sudo
+# RUN apt-get -y install sudo
 
 ARG TOOLS_DIR=/tools
 
@@ -72,7 +72,7 @@ RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-a
 # ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
 ENTRYPOINT ["/bin/bash", "-c", "echo $1; while true; do sleep 30; done; "]
 
-USER gpadmin
+# USER gpadmin
 
 # USER env is referenced by `gpconfig`, `gpcheckcat`, `gpssh`, `gpscp`, `gpinitsegment`,
 # and `gpload` utilities through `os.environ.get('USER')`
