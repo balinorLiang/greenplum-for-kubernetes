@@ -67,7 +67,8 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
     dpkg -i tini_0.19.0-amd64.deb && \
     rm tini_0.19.0-amd64.deb
-ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
+# ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
+ENTRYPOINT ["/bin/bash"]
 
 USER gpadmin
 
