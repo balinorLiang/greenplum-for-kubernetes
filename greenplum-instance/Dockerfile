@@ -72,7 +72,7 @@ RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-a
 # ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
 ENTRYPOINT ["/bin/bash", "-c", "echo $1; while true; do sleep 30; done; "]
 
-# USER gpadmin
+USER gpadmin
 
 # USER env is referenced by `gpconfig`, `gpcheckcat`, `gpssh`, `gpscp`, `gpinitsegment`,
 # and `gpload` utilities through `os.environ.get('USER')`
@@ -89,6 +89,8 @@ RUN ls /usr/local/pxf
 
 # Initialize pxf directories; needs GPHOME set
 RUN /bin/bash -c 'source /usr/local/gpdb/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
+
+USER root
 
 EXPOSE 22
 
