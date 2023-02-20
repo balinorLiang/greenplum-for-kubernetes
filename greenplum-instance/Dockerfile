@@ -92,7 +92,7 @@ RUN ls /usr/local/pxf
 # Initialize pxf directories; needs GPHOME set
 RUN /bin/bash -c 'source /usr/local/gpdb/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
 
-USER root
+# USER root
 
 EXPOSE 22
 
