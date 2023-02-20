@@ -27,7 +27,7 @@ FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 # remove gppkg because it's misleading to users in the kubernetes environment
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
 
-RUN apt-get install -y sudo
+RUN apt-get -y install sudo
 
 ARG TOOLS_DIR=/tools
 
