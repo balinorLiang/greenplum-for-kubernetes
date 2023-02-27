@@ -99,7 +99,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 		templateSpec.Affinity = getAffinityDefinition(params.Type, sset.Namespace)
 	}
 	templateSpec.ServiceAccountName = "greenplum-system-pod"
-	fmt.Fprintln(os.Stderr, "params.GpPodSpec.SchedulerName: %#v", params.GpPodSpec.SchedulerName)
+	fmt.Fprintln(os.Stderr, fmt.Sprintf("params.GpPodSpec.SchedulerName: %#v", params.GpPodSpec.SchedulerName))
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
