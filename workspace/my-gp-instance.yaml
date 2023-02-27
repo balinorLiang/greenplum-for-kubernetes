@@ -11,6 +11,7 @@ spec:
     storageClassName: standard
     storage: 1G
     workerSelector: {}
+    scheduler: foobar
   segments:
     primarySegmentCount: 1
     memory: "800Mi"
@@ -18,3 +19,4 @@ spec:
     storageClassName: standard
     storage: 2G
     workerSelector: {}
+    scheduler: barfoo
