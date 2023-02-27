@@ -1,7 +1,6 @@
 package sset
 
 import (
-	"os"
 	"fmt"
 
 	greenplumv1 "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/api/v1"
@@ -99,8 +98,6 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 		templateSpec.Affinity = getAffinityDefinition(params.Type, sset.Namespace)
 	}
 	templateSpec.ServiceAccountName = "greenplum-system-pod"
-	fmt.Fprintln(os.Stderr, fmt.Sprintf("params.GpPodSpec.SchedulerName: %#v", params.GpPodSpec.SchedulerName))
-	fmt.Fprintln(os.Stderr, fmt.Sprintf("params.GpPodSpec: %#v", params.GpPodSpec))
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
