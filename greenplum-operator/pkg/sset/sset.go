@@ -100,6 +100,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 	templateSpec.ServiceAccountName = "greenplum-system-pod"
 	fmt.Fprintln(os.Stderr, fmt.Sprintf("params.GpPodSpec.SchedulerName: %#v", params.GpPodSpec.SchedulerName))
+	fmt.Fprintln(os.Stderr, fmt.Sprintf("params.GpPodSpec: %#v", params.GpPodSpec))
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
