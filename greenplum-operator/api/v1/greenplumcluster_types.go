@@ -42,7 +42,7 @@ type GreenplumPodSpec struct {
 	AntiAffinity string `json:"antiAffinity,omitempty"`
 
 	// Name of scheduler to be used for statefulset pods
-	SchedulerName string `json:"schedulerName,omitempty`
+	SchedulerName string `json:"schedulerName`
 }
 
 type GreenplumMasterAndStandbySpec struct {
