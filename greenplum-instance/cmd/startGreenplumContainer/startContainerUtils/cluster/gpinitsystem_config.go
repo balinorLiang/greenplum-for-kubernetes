@@ -64,7 +64,9 @@ func (g *gpInitSystem) GenerateConfig() error {
 		return err
 	}
 	dbID := 1
-	fmt.Fprintf(configFile, "QD_PRIMARY_ARRAY=master-0.%v~5432~/greenplum/data-1~%d~-1~0\n", subdomain, dbID)
+	hostname := fmt.Sprintf("master-0.%v", subdomain)
+	// fmt.Fprintf(configFile, "QD_PRIMARY_ARRAY=master-0.%v~5432~/greenplum/data-1~%d~-1~0\n", subdomain, dbID)
+	fmt.Fprintf(configFile, "QD_PRIMARY_ARRAY=%v~%v~5432~/greenplum/data-1~%d~-1~0\n", hostname, hostname, dbID)
 	dbID++
 	fmt.Fprint(configFile, "declare -a PRIMARY_ARRAY=(\n")
 	for segment := 0; segment < segmentCount; segment++ {
