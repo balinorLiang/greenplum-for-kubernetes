@@ -70,7 +70,10 @@ func (g *gpInitSystem) GenerateConfig() error {
 	dbID++
 	fmt.Fprint(configFile, "declare -a PRIMARY_ARRAY=(\n")
 	for segment := 0; segment < segmentCount; segment++ {
-		fmt.Fprintf(configFile, "segment-a-%d.%v~40000~/greenplum/data~%d~%d\n", segment, subdomain, dbID, segment)
+		hostname = fmt.Sprintf("segment-a-%d.%v", segment, subdomain)
+		// fmt.Fprintf(configFile, "segment-a-%d.%v~40000~/greenplum/data~%d~%d\n", segment, subdomain, dbID, segment)
+		fmt.Fprintf(configFile, "%v~%v~40000~/greenplum/data~%d~%d\n", hostname, hostname, dbID, segment)
+
 		dbID++
 	}
 	fmt.Fprint(configFile, ")\n")
@@ -81,7 +84,10 @@ func (g *gpInitSystem) GenerateConfig() error {
 			// bare metal systems that primaries and mirrors don't share storage.
 			// https://github.com/greenplum-db/gpdb/blob/5X_STABLE/gpMgmt/bin/gpinitsystem#L460
 			// TODO: enhance gpinitsystem to consider the hostname as well? i.e., sdw1:/data != sdw2:/data
-			fmt.Fprintf(configFile, "segment-b-%d.%v~50000~/greenplum/mirror/data~%d~%d\n", segment, subdomain, dbID, segment)
+			hostname = fmt.Sprintf("segment-b-%d.%v", segment, subdomain)
+			// fmt.Fprintf(configFile, "segment-b-%d.%v~50000~/greenplum/mirror/data~%d~%d\n", segment, subdomain, dbID, segment)
+			fmt.Fprintf(configFile, "%v~%v~50000~/greenplum/mirror/data~%d~%d\n", hostname, hostname, dbID, segment)
+
 			dbID++
 		}
 		fmt.Fprint(configFile, ")\n")
