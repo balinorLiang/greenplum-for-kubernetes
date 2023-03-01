@@ -106,7 +106,7 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
-	args := []string{"-a", "-I", GpinitsystemConfigPath}
+	args := []string{"-D", "-a", "-I", GpinitsystemConfigPath}
 
 	if standby, err := g.configReader.GetStandby(); err != nil {
 		return err
