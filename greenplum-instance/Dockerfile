@@ -28,7 +28,8 @@ FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
 
 RUN mv /etc/sudoers /etc/sudoers.bak
-RUN apt-get -y install sudo
+RUN apt-get update
+RUN apt-get -y install sudo iproute2 rsync
 RUN mv /etc/sudoers.bak /etc/sudoers
 
 ARG TOOLS_DIR=/tools
