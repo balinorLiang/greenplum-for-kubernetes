@@ -14,7 +14,6 @@ type GreenplumContainerStarter struct {
 }
 
 func (s *GreenplumContainerStarter) Run(args []string) (status int) {
-	fmt.Fprintln(s.StderrBuffer, "args: %#v", args)
 	if len(args) == 2 && args[1] == "--do-root-startup" {
 		if s.UID != 0 {
 			fmt.Fprintf(s.StderrBuffer, "--do-root-startup was passed, but we are not root")
@@ -49,8 +48,7 @@ func (s *GreenplumContainerStarter) Run(args []string) (status int) {
 		s.LabelPVC,
 		s.MultidaemonStarter,
 	}
-	for i, step := range starters {
-		// fmt.Fprintln(s.StderrBuffer, "running step:", i)
+	for _, step := range starters {
 		if err := step.Run(); err != nil {
 			fmt.Fprintln(s.StderrBuffer, err)
 			fmt.Fprintln(s.StderrBuffer, "Returning 1 because of an error in a step")
