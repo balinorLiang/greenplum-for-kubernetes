@@ -153,6 +153,7 @@ func (c *Cluster) RunPostInitialization() error {
 	if err := c.reloadGpConfig(); err != nil {
 		return fmt.Errorf("gpstop failed: %w", err)
 	}
+	PrintMessage(c.Stdout, "Finished reloading greenplum configs")
 
 	if err := c.createPXFExtension(); err != nil {
 		return fmt.Errorf("createPXFExtension failed: %w", err)
