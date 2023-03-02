@@ -114,10 +114,10 @@ func (g *gpInitSystem) Run() error {
 		args = append(args, []string{"-s", "master-1." + dnsSuffix}...)
 	}
 
-	_, err = g.Filesystem.Lstat("/etc/config/GUCs")
-	if err == nil {
-		args = append(args, "-p", "/etc/config/GUCs")
-	}
+	// _, err = g.Filesystem.Lstat("/etc/config/GUCs")
+	// if err == nil {
+	// 	args = append(args, "-p", "/etc/config/GUCs")
+	// }
 
 	fmt.Fprintln(os.Stderr, fmt.Sprintf("args to gpinitsystem: %#v", args))
 
