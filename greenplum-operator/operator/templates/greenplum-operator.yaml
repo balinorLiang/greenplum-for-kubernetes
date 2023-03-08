@@ -37,7 +37,7 @@ spec:
         image: {{ .Values.operatorImageRepository }}:{{ .Values.operatorImageTag }}
         command: ["greenplum-operator", "--logLevel", {{ .Values.logLevel | default "info" | quote }}]
         imagePullPolicy: Always
-        # imagePullSecret: gcr
+        # imagePullSecret: gcr-key
         env:
         - name: GREENPLUM_IMAGE_REPO
           value: {{ .Values.greenplumImageRepository }}
@@ -56,4 +56,4 @@ spec:
 #          initialDelaySeconds: 1
 #          periodSeconds: 5
       imagePullSecrets:
-        - name: gcr
+        - name: gcr-key

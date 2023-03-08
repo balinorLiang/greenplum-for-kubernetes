@@ -27,7 +27,7 @@ func GenerateJob(image, hostname string, newSegCount int32) (job batchv1.Job) {
 	}
 	gpexpandPod.ImagePullSecrets = []corev1.LocalObjectReference{
 		{
-			Name: "gcr",
+			Name: "gcr-key",
 		},
 	}
 	gpexpandPod.Containers = []corev1.Container{
