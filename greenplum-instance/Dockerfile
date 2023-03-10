@@ -83,12 +83,12 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
 RUN wget https://download.osgeo.org/postgis/source/postgis-3.3.2.tar.gz
 RUN tar -xzf postgis-3.3.2.tar.gz
-WORKDIR /home/root/postgis-3.3.2
-# RUN /home/root/postgis-3.3.2/configure
-# RUN make
-# RUN make install
+WORKDIR /workspace/postgis-3.3.2
+RUN ./configure
+RUN make
+RUN make install
 
-WORKDIR /home/root
+WORKDIR /workspace
 
 # RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
 # RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
