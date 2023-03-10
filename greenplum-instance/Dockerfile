@@ -87,10 +87,6 @@ WORKDIR /home/gpadmin
 # TODO update the deploy.sh etc. to only depends on /tools instead of /home/gpadmin/tools
 RUN ln -s ${TOOLS_DIR} /home/gpadmin/tools
 
-RUN ls /usr/local
-RUN ls /usr/local/greenplum-db
-RUN ls /usr/local/pxf
-
 # Initialize pxf directories; needs GPHOME set
 RUN /bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
 
