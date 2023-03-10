@@ -72,7 +72,8 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
 RUN apt-get install -y postgis
 RUN cp -r /usr/share/postgresql/10/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
-RUN cp -r /usr/share/postgresql/10/contrib/postgis* /usr/local/greenplum-db/lib/postgresql/
+RUN cp -r /usr/share/postgresql/10/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
+RUN cp -r /usr/lib/postgresql/10/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
 # ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
