@@ -71,6 +71,7 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
 RUN apt-get install -y postgis
+RUN cp /usr/share/postgresql/10/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
 
 # Install tini
 RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
