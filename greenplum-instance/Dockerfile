@@ -68,12 +68,22 @@ RUN \
 ENV PXF_CONF=/etc/pxf
 RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
-RUN apt-get install -y postgis
-RUN cp -r /usr/share/postgresql/10/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
-RUN cp -r /usr/share/postgresql/10/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
-RUN cp -r /usr/lib/postgresql/10/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
+# RUN apt-get install -y software-properties-common
+# RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
+# RUN apt-get install -y postgis
+
+RUN apt install ca-certificates
+# RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
+RUN echo "deb http://apt.postgresql.org/pubs/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8 | apt-key add -
+RUN apt update
+RUN apt install postgresql-12-postgis-2.5
+RUN apt install postgresql-12-postgis-scripts
+RUN apt install postgis
+
+RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
+RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
+RUN cp -r /usr/lib/postgresql/12/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
 # ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
