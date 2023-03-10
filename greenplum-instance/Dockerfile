@@ -78,7 +78,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/a
 # RUN wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8 | apt-key add -
 RUN apt update
 RUN apt install -y postgresql-12-postgis-2.5
-RUN apt install -y postgresql-12-postgis-scripts
+# RUN apt install -y postgresql-12-postgis-scripts
 RUN apt install -y postgis
 
 RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
