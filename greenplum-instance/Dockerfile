@@ -84,9 +84,9 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 RUN wget https://download.osgeo.org/postgis/source/postgis-3.3.2.tar.gz
 RUN tar -xzf postgis-3.3.2.tar.gz
 WORKDIR /home/root/postgis-3.3.2
-RUN /home/root/postgis-3.3.2/configure
-RUN make
-RUN make install
+# RUN /home/root/postgis-3.3.2/configure
+# RUN make
+# RUN make install
 
 WORKDIR /home/root
 
