@@ -68,7 +68,7 @@ RUN \
 ENV PXF_CONF=/etc/pxf
 RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
-RUN add-apt-repository -y ppa:https://launchpad.net/~ubuntugis/+archive/ppa/
+RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
 RUN apt-get install postgis
 
 # Install tini
