@@ -72,10 +72,10 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 # RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
 # RUN apt-get install -y postgis
 
-RUN apt install ca-certificates
-# RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
+RUN apt install curl ca-certificates gnupg
+RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
 RUN echo "deb http://apt.postgresql.org/pubs/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8 | apt-key add -
+# RUN wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8 | apt-key add -
 RUN apt update
 RUN apt install postgresql-12-postgis-2.5
 RUN apt install postgresql-12-postgis-scripts
