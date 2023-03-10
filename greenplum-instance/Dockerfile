@@ -73,7 +73,7 @@ RUN add-apt-repository -y ppa:ubuntugis/ppa && apt update
 RUN apt-get install -y postgis
 RUN cp -r /usr/share/postgresql/10/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
 RUN cp -r /usr/share/postgresql/10/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
-RUN export libdir=/usr/loca/greenplum-db/share/postgresql/contrib/
+ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
 RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
