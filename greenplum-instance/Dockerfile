@@ -68,7 +68,7 @@ RUN \
 ENV PXF_CONF=/etc/pxf
 RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
-RUN apt-get install -y software-properties-common python-software-properties
+RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa
 RUN apt update
 RUN apt-get install -y geos
