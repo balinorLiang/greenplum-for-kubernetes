@@ -71,7 +71,11 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa
 RUN apt update
-RUN apt-get install -y libgeos-3.7.1 gdal-data libgeos-c1v5
+RUN apt-get install -y libgeos-3.7.1 libgeos++-dev libgeos-3.7.1-dbgsym libgeos-c1v5 libgeos-c1v5-dbgsym libgeos-dev libgeos-doc \
+    gdal-bin gdal-bin-dbgsym gdal-data libgdal-dev libgdal-doc libgdal20 libgdal20-dbgsym python3-gdal python3-gdal-dbgsym \
+    proj-bin \
+    libxml2 libxml2-dev \
+    libjson-c libjson-c-dev
 
 # RUN apt install curl ca-certificates gnupg
 # RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
