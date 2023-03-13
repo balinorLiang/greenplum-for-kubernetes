@@ -68,6 +68,12 @@ RUN \
 ENV PXF_CONF=/etc/pxf
 RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
+RUN apt install curl ca-certificates gnupg
+RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUn apt update
+RUN apt-get install postgresql-12-dev
+
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa
 RUN apt update
@@ -75,8 +81,8 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
     gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
     proj-bin \
     libxml2 libxml2-dev \
-    libjson-c-dev \
-    postgresql-dev
+    libjson-c-dev
+    # postgresql-12-dev
     # libjson-c libjson-c-dev
 
 # RUN apt install curl ca-certificates gnupg
