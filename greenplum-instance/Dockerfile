@@ -72,7 +72,7 @@ RUN apt install curl ca-certificates gnupg
 RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUn apt update
-RUN apt-get install postgresql-12-dev
+RUN apt-get install postgresql-12 postgrsql-server-dev-12 postgresql-contrib-12
 
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa
