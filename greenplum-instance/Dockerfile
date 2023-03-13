@@ -75,7 +75,8 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
     gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
     proj-bin \
     libxml2 libxml2-dev \
-    libjson-c-dev
+    libjson-c-dev \
+    postgresql-dev
     # libjson-c libjson-c-dev
 
 # RUN apt install curl ca-certificates gnupg
