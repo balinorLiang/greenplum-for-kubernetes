@@ -104,9 +104,9 @@ RUN make install
 
 WORKDIR /workspace
 
-# RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
-# RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
-# RUN cp -r /usr/lib/postgresql/12/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
+RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
+RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
+RUN cp -r /usr/lib/postgresql/12/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
 # ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
