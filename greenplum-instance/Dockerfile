@@ -85,7 +85,7 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
     protobuf-c-compiler protobuf-compiler libprotobuf-c1 libprotobuf-c-dev \
     autoconf \
     expat \
-    libcunit1 libcunit10-dev
+    libcunit1 libcunit1-dev
     # postgresql-12-dev
     # libjson-c libjson-c-dev
 
