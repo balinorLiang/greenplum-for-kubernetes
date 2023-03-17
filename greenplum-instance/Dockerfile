@@ -78,7 +78,7 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa
 RUN apt update
 RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev libgeos-doc \
-    gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
+    # gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
     proj-bin \
     libxml2 libxml2-dev \
     libjson-c-dev \
@@ -104,6 +104,15 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
 # RUN ./configure
 # RUN make
 # RUN make install
+
+RUN wget https://download.osgeo.org/gdal/1.11.1/gdal-1.11.1.tar.gz
+RUN tar zxf gdal-1.11.1.tar.gz
+WORKDIR /workspace/gdal-1.11.1
+RUN ./configure --prefix=$GPHOME
+RUN make
+RUN make install
+
+WORKDIR /workspace
 
 RUN wget https://github.com/greenplum-db/geospatial/archive/refs/heads/main.zip
 RUN unzip main.zip
