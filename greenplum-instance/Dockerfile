@@ -95,18 +95,25 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
 # # RUN apt install -y postgresql-12-postgis-scripts
 # RUN apt install -y postgis
 
-RUN wget https://download.osgeo.org/postgis/source/postgis-3.3.2.tar.gz
-RUN tar -xzf postgis-3.3.2.tar.gz
-WORKDIR /workspace/postgis-3.3.2
-RUN ./configure
-RUN make
-RUN make install
+# RUN wget https://download.osgeo.org/postgis/source/postgis-3.3.2.tar.gz
+# RUN tar -xzf postgis-3.3.2.tar.gz
+# WORKDIR /workspace/postgis-3.3.2
+# RUN ./configure
+# RUN make
+# RUN make install
+
+RUN wget https://github.com/greenplum-db/geospatial/archive/refs/heads/main.zip
+RUN unzip main.zip
+WORKDIR /workspace/postgis/build/postgis-2.5.4
+RUN ./autogen.sh
+RUN ./configure --with-pgconfig=$GPHOME/bin/pg_config --with-raster --without-topology --prefix=$GPHOME
+RUN make USE_PGXS=1 clean all install
 
 WORKDIR /workspace
 
-RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
-RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
-RUN cp -r /usr/lib/postgresql/12/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
+# RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
+# RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
+# RUN cp -r /usr/lib/postgresql/12/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
 # ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
