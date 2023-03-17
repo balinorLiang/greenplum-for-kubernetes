@@ -104,7 +104,7 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
 
 RUN wget https://github.com/greenplum-db/geospatial/archive/refs/heads/main.zip
 RUN unzip main.zip
-WORKDIR /workspace/postgis/build/postgis-2.5.4
+WORKDIR /workspace/geospatial-main/postgis/build/postgis-2.5.4
 RUN ./autogen.sh
 RUN ./configure --with-pgconfig=$GPHOME/bin/pg_config --with-raster --without-topology --prefix=$GPHOME
 RUN make USE_PGXS=1 clean all install
