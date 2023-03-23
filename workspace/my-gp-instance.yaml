@@ -12,6 +12,7 @@ spec:
     storage: 1G
     workerSelector: {}
     # schedulerName: foobar
+    spec: {}
   segments:
     primarySegmentCount: 1
     memory: "800Mi"
@@ -20,3 +21,6 @@ spec:
     storage: 2G
     workerSelector: {}
     # schedulerName: barfoo
+    spec:
+      serviceName: "tarkus"
+      replicas: 2
