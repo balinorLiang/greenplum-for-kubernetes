@@ -105,23 +105,23 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
 # RUN make
 # RUN make install
 
-RUN wget https://download.osgeo.org/gdal/1.11.1/gdal-1.11.1.tar.gz
-RUN tar zxf gdal-1.11.1.tar.gz
-WORKDIR /workspace/gdal-1.11.1
-RUN ./configure --prefix=$GPHOME
-RUN make
-RUN make install
+# RUN wget https://download.osgeo.org/gdal/1.11.1/gdal-1.11.1.tar.gz
+# RUN tar zxf gdal-1.11.1.tar.gz
+# WORKDIR /workspace/gdal-1.11.1
+# RUN ./configure --prefix=$GPHOME
+# RUN make
+# RUN make install
 
-WORKDIR /workspace
+# WORKDIR /workspace
 
-RUN wget https://github.com/greenplum-db/geospatial/archive/refs/heads/main.zip
-RUN unzip main.zip
-WORKDIR /workspace/geospatial-main/postgis/build/postgis-2.5.4
-RUN ./autogen.sh
-RUN ./configure --with-pgconfig=$GPHOME/bin/pg_config --with-raster --without-topology --prefix=$GPHOME
-RUN make USE_PGXS=1 clean all install
+# RUN wget https://github.com/greenplum-db/geospatial/archive/refs/heads/main.zip
+# RUN unzip main.zip
+# WORKDIR /workspace/geospatial-main/postgis/build/postgis-2.5.4
+# RUN ./autogen.sh
+# RUN ./configure --with-pgconfig=$GPHOME/bin/pg_config --with-raster --without-topology --prefix=$GPHOME
+# RUN make USE_PGXS=1 clean all install
 
-WORKDIR /workspace
+# WORKDIR /workspace
 
 # RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
 # RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
