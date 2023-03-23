@@ -75,6 +75,9 @@ spec:
                   schedulerName:
                     description: Name of scheduler to use for statefulset pods
                     type: string
+                  spec:
+                    description: StatefulSetSpec to use (optional, if present overrides other values)
+                    type: object
                   standby:
                     default: "no"
                     description: YES or NO, specify whether or not to deploy a standby
@@ -149,6 +152,9 @@ spec:
                   schedulerName:
                     description: Name of scheduler to use for statefulset pods
                     type: string
+                  spec:
+                    description: StatefulSet spec to use
+                    type: object
                   storage:
                     anyOf:
                     - type: integer
