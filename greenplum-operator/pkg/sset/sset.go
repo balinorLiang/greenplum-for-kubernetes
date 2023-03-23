@@ -56,6 +56,7 @@ func GenerateStatefulSetParams(ssetType StatefulSetType, cluster *greenplumv1.Gr
 }
 
 func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1.StatefulSet) {
+	fmt.Println(params.Spec)
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
 	if sset.Labels == nil {
