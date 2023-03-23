@@ -10,7 +10,9 @@ spec:
     cpu: "0.5"
     storageClassName: standard
     storage: 1G
-    workerSelector: {}
+    workerSelector:
+      serviceName: "barkas"
+      replicas: 3
     # schedulerName: foobar
     spec: {}
   segments:
