@@ -78,6 +78,7 @@ spec:
                   spec:
                     description: StatefulSetSpec to use (optional, if present overrides other values)
                     type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   standby:
                     default: "no"
                     description: YES or NO, specify whether or not to deploy a standby
@@ -155,6 +156,7 @@ spec:
                   spec:
                     description: StatefulSet spec to use
                     type: object
+                    x-kubernetes-preserve-unknown-fields: true
                   storage:
                     anyOf:
                     - type: integer
