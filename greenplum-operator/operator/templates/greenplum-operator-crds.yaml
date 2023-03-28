@@ -73,10 +73,10 @@ spec:
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
                   schedulerName:
-                    description: Name of scheduler to use for statefulset pods
+                    description: Name of scheduler to use for pods
                     type: string
                   spec:
-                    description: StatefulSetSpec to use (optional, if present overrides other values)
+                    description: Pod Spec to use (optional, if present overrides other values)
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
                   standby:
@@ -151,10 +151,10 @@ spec:
                     minimum: 1
                     type: integer
                   schedulerName:
-                    description: Name of scheduler to use for statefulset pods
+                    description: Name of scheduler to use for pods
                     type: string
                   spec:
-                    description: StatefulSet spec to use
+                    description: Pod spec to use
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
                   storage:

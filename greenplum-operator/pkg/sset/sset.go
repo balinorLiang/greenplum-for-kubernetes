@@ -57,8 +57,8 @@ func GenerateStatefulSetParams(ssetType StatefulSetType, cluster *greenplumv1.Gr
 
 func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1.StatefulSet) {
 	fmt.Println(params.GpPodSpec.Spec)
-	fmt.Println(params.GpPodSpec.Spec.ServiceName)
-	fmt.Println(&(params.GpPodSpec.Spec.Replicas))
+	fmt.Println(params.GpPodSpec.Spec.RestartPolicy)
+	fmt.Println(&(params.GpPodSpec.Spec.TerminationGracePeriodSeconds))
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
 	if sset.Labels == nil {

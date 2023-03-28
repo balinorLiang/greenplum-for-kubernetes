@@ -5,7 +5,7 @@
 package v1
 
 import (
-	"k8s.io/api/apps/v1"
+	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -45,9 +45,9 @@ type GreenplumPodSpec struct {
 	// Name of scheduler to be used for statefulset pods
 	SchedulerName string `json:"schedulerName,omitempty"`
 
-	// Optional StatefulSetSpec, for if you just want to get specific and manage all this yourself
+	// Optional PodSpec, for if you just want to get specific and manage all this yourself
 	//+optional
-	Spec v1.StatefulSetSpec `json:"spec,omitempty"`
+	Spec v1.PodSpec `json:"template,omitempty"`
 }
 
 type GreenplumMasterAndStandbySpec struct {
