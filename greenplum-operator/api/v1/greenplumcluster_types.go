@@ -47,7 +47,7 @@ type GreenplumPodSpec struct {
 
 	// Optional PodSpec, for if you just want to get specific and manage all this yourself
 	//+optional
-	Spec v1.PodSpec `json:"template,omitempty"`
+	Spec v1.PodSpec `json:"spec,omitempty"`
 }
 
 type GreenplumMasterAndStandbySpec struct {
