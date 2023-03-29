@@ -241,6 +241,11 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 			Name:      "master",
 			Namespace: ns,
 		},
+		Spec: appsv1.StatefulSetSpec{
+			Template: corev1.PodTemplateSpec{
+				Spec: masterStatefulSetParams.GpPodSpec.Spec,
+			},
+		},
 	}
 	operationResult, err = ctrl.CreateOrUpdate(ctx, r, masterStatefulSet, func() error {
 		sset.ModifyGreenplumStatefulSet(masterStatefulSetParams, masterStatefulSet)
@@ -256,6 +261,11 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "segment-a",
 			Namespace: ns,
+		},
+		Spec: appsv1.StatefulSetSpec{
+			Template: corev1.PodTemplateSpec{
+				Spec: primaryStatefulSetParams.GpPodSpec.Spec,
+			},
 		},
 	}
 	operationResult, err = ctrl.CreateOrUpdate(ctx, r, primaryStatefulSet, func() error {
@@ -273,6 +283,11 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      "segment-b",
 				Namespace: ns,
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Template: corev1.PodTemplateSpec{
+					Spec: mirrorStatefulSetParams.GpPodSpec.Spec,
+				},
 			},
 		}
 		operationResult, err = ctrl.CreateOrUpdate(ctx, r, mirrorStatefulSet, func() error {
