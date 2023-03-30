@@ -56,9 +56,9 @@ func GenerateStatefulSetParams(ssetType StatefulSetType, cluster *greenplumv1.Gr
 }
 
 func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1.StatefulSet) {
-	fmt.Println(params.GpPodSpec.Spec)
-	fmt.Println(params.GpPodSpec.Spec.RestartPolicy)
-	fmt.Println(*params.GpPodSpec.Spec.TerminationGracePeriodSeconds)
+	// fmt.Println(params.GpPodSpec.Spec)
+	// fmt.Println(params.GpPodSpec.Spec.RestartPolicy)
+	// fmt.Println(*params.GpPodSpec.Spec.TerminationGracePeriodSeconds)
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
 	if sset.Labels == nil {
@@ -84,6 +84,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 
 	templateSpec := &sset.Spec.Template.Spec
+	fmt.Println(*templateSpec)
 	templateSpec.DNSConfig = &corev1.PodDNSConfig{
 		Searches: []string{headlessServiceName + "." + sset.Namespace + ".svc.cluster.local"},
 	}
@@ -104,6 +105,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
+	fmt.Println(*templateSpec)
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
