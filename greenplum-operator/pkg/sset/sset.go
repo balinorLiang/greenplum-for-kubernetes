@@ -84,13 +84,14 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 
 	templateSpec := &sset.Spec.Template.Spec
-	fmt.Println(*templateSpec)
+	// fmt.Println(*templateSpec)
 	templateSpec.DNSConfig = &corev1.PodDNSConfig{
 		Searches: []string{headlessServiceName + "." + sset.Namespace + ".svc.cluster.local"},
 	}
 	if len(params.GpPodSpec.WorkerSelector) > 0 {
 		templateSpec.NodeSelector = params.GpPodSpec.WorkerSelector
 	}
+	fmt.Println(params.GpPodSpec.ImagePullSecret)
 	templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
 		{
 			Name: params.GpPodSpec.ImagePullSecret,
@@ -110,7 +111,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
-	fmt.Println(*templateSpec)
+	// fmt.Println(*templateSpec)
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
