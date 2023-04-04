@@ -93,9 +93,14 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 	templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
 		{
-			Name: "gcr-key",
+			Name: params.GpPodSpec.ImagePullSecret,
 		},
 	}
+	// templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
+	// 	{
+	// 		Name: "gcr-key",
+	// 	},
+	// }
 	templateSpec.Containers = modifyGreenplumContainer(params, templateSpec.Containers)
 	templateSpec.Volumes = getVolumeDefinition()
 	if params.GpPodSpec.AntiAffinity == "yes" {

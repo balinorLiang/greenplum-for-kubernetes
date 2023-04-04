@@ -64,6 +64,9 @@ spec:
                   hostBasedAuthentication:
                     description: Additional entries to add to pg_hba.conf
                     type: string
+                  imagePullSecret:
+                    description: The name of the imagePullSecret to use for pulling this pod. Defaults to gcr-key
+                    type: string
                   memory:
                     anyOf:
                     - type: integer
@@ -130,6 +133,9 @@ spec:
                       3.5, etc.
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
+                  imagePullSecret:
+                    description: imagePullSecret to use for pod. Defaults to gcr-key
+                    type: string
                   memory:
                     anyOf:
                     - type: integer

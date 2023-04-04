@@ -45,6 +45,10 @@ type GreenplumPodSpec struct {
 	// Name of scheduler to be used for statefulset pods
 	SchedulerName string `json:"schedulerName,omitempty"`
 
+	// ImagePullSecret to be used for pods
+	// +kubebuilder:default="gcr-key"
+	ImagePullSecret string `json:"imagePullSecret,omitempty`
+
 	// Optional PodSpec, for if you just want to get specific and manage all this yourself
 	//+optional
 	Spec v1.PodSpec `json:"spec,omitempty"`
