@@ -9,7 +9,7 @@ COPY go.mod go.sum /greenplum-for-kubernetes/
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-    cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && go build
+    cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && controller-gen && go build
 
 # build greenplum-operator image from here
 FROM cloudfoundry/run:base
