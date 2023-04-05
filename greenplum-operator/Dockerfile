@@ -10,6 +10,7 @@ COPY go.mod go.sum /greenplum-for-kubernetes/
 
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
 RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
+RUN ls /usr/local/go
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && controller-gen && go build
