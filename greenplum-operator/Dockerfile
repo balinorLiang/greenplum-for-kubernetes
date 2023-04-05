@@ -2,7 +2,6 @@
 FROM golang:1.19 as build-in-docker
 
 
-
 COPY greenplum-operator/ /greenplum-for-kubernetes/greenplum-operator/
 COPY pkg/ /greenplum-for-kubernetes/pkg/
 COPY tools/ /greenplum-for-kubernetes/tools/
@@ -13,7 +12,7 @@ WORKDIR /greenplum-for-kubernetes/greenplum-operator
 RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-    cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && $(GOBIN)/controller-gen && go build
+    cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && /usr/local/go/bin/controller-gen && go build
 
 # build greenplum-operator image from here
 FROM cloudfoundry/run:base
