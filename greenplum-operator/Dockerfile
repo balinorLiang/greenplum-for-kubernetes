@@ -12,8 +12,9 @@ WORKDIR /greenplum-for-kubernetes/greenplum-operator
 RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
+    cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && go build
     # cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && /usr/local/go/bin/controller-gen && go build
-    /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && go build
+
 
 # build greenplum-operator image from here
 FROM cloudfoundry/run:base
