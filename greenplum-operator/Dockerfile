@@ -9,13 +9,13 @@ COPY go.mod go.sum /greenplum-for-kubernetes/
 
 
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
-RUN go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
+# RUN go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # # RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # RUN ls /usr/local/go/bin
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator \
-    && controller-gen crd:crdVersions=v1 rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases \
+    # && controller-gen crd:crdVersions=v1 rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases \
     # && kubectl kustomize config/crd > operator/templates/greenplum-operator-crds.yaml
     && go build
     # cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && /usr/local/go/bin/controller-gen && go build
@@ -37,7 +37,7 @@ RUN set -x && \
 ARG VERSION=dev
 ARG DATE="25 Jan 2023"
 ARG LICENSE="https://www.apache.org/licenses/LICENSE-2.0"
-ARG GREENPLUM_VERSION=6.11.2
+ARG GREENPLUM_VERSION=7.00.0
 
 ENV GREENPLUM_VERSION=${GREENPLUM_VERSION}
 
