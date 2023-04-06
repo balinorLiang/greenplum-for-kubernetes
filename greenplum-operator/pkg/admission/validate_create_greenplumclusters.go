@@ -116,7 +116,9 @@ func (h *Handler) validatePvcGreenplumVersion(ctx context.Context, newGreenplum 
 		if !ok {
 			errMsg := fmt.Sprintf(pvcVersionErrFmt, greenplumcluster.SupportedGreenplumMajorVersion, "no label")
 			result = &metav1.Status{Message: errMsg}
-		} else if ver != greenplumcluster.SupportedGreenplumMajorVersion {
+			// } else if ver != greenplumcluster.SupportedGreenplumMajorVersion {
+			// TODO: Turn SupportedGreenplumMajorVersion into a list
+		} else if (ver != "6" && ver != "7") {
 			errMsg := fmt.Sprintf(pvcVersionErrFmt, greenplumcluster.SupportedGreenplumMajorVersion, "greenplum-major-version="+ver)
 			result = &metav1.Status{Message: errMsg}
 		}
