@@ -47,7 +47,7 @@ type GreenplumPodSpec struct {
 
 	// ImagePullSecret to be used for pods
 	// +kubebuilder:default="gcr-key"
-	ImagePullSecret string `json:"imagePullSecret,omitempty`
+	ImagePullSecret string `json:"imagePullSecret`
 
 	// Optional PodSpec, for if you just want to get specific and manage all this yourself
 	//+optional
