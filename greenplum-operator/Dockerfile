@@ -9,7 +9,8 @@ COPY go.mod go.sum /greenplum-for-kubernetes/
 
 
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
-RUN apt install kubectl
+RUN apt-get update \
+    && apt-get install -y kubectl
 RUN go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # # RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # RUN ls /usr/local/go/bin
