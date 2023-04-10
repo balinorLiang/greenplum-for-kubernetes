@@ -11,7 +11,7 @@ spec:
     storageClassName: standard
     storage: 1G
     workerSelector: {}
-    imagePullSecret: gcr-key
+    # imagePullSecret: gcr-key
     # schedulerName: foobar
     # spec:
       # restartPolicy: "Always"
@@ -94,7 +94,7 @@ spec:
     storageClassName: standard
     storage: 2G
     workerSelector: {}
-    imagePullSecret: gcr-key
+    # imagePullSecret: gcr-key
     # schedulerName: barfoo
     # spec:
     #   restartPolicy: "Always"
