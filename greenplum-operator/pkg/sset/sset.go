@@ -91,17 +91,17 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	if len(params.GpPodSpec.WorkerSelector) > 0 {
 		templateSpec.NodeSelector = params.GpPodSpec.WorkerSelector
 	}
-	// fmt.Println(params.GpPodSpec.ImagePullSecret)
-	// templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
-	// 	{
-	// 		Name: params.GpPodSpec.ImagePullSecret,
-	// 	},
-	// }
+	fmt.Println(params.GpPodSpec.ImagePullSecret)
 	templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
 		{
-			Name: "gcr-key",
+			Name: params.GpPodSpec.ImagePullSecret,
 		},
 	}
+	// templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
+	// 	{
+	// 		Name: "gcr-key",
+	// 	},
+	// }
 	templateSpec.Containers = modifyGreenplumContainer(params, templateSpec.Containers)
 	templateSpec.Volumes = getVolumeDefinition()
 	if params.GpPodSpec.AntiAffinity == "yes" {
