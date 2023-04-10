@@ -8,7 +8,7 @@ COPY tools/ /greenplum-for-kubernetes/tools/
 COPY go.mod go.sum /greenplum-for-kubernetes/
 
 RUN curl -LO "https://dl.k8s.io/release/v1.26.3/bin/linux/amd64/kubectl" \
-    && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
 # RUN apt-get update \
