@@ -7,11 +7,12 @@ COPY pkg/ /greenplum-for-kubernetes/pkg/
 COPY tools/ /greenplum-for-kubernetes/tools/
 COPY go.mod go.sum /greenplum-for-kubernetes/
 
+RUN curl -LO "https://dl.k8s.io/release/v1.26.3/bin/linux/amd64/kubectl"
+    && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
 # RUN apt-get update \
     # && apt-get install -y kubectl
-RUN curl -LO "https://dl.k8s.io/release/v1.26.3/bin/linux/amd64/kubectl"
 RUN go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # # RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # RUN ls /usr/local/go/bin
