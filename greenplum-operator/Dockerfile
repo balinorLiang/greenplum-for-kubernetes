@@ -12,9 +12,9 @@ WORKDIR /greenplum-for-kubernetes/greenplum-operator
 RUN go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # # RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
 # RUN ls /usr/local/go/bin
-RUN controller-gen object:headerFile=./hack/boilerplate.go.txt paths=./api/...
-    # && controller-gen crd:crdVersions=v1 rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases \
-    # && kubectl kustomize config/crd > operator/templates/greenplum-operator-crds.yaml \
+# RUN controller-gen object:headerFile=./hack/boilerplate.go.txt paths=./api/...
+RUN controller-gen crd:crdVersions=v1 rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases \
+    && kubectl kustomize config/crd > operator/templates/greenplum-operator-crds.yaml \
 
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
