@@ -161,6 +161,8 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 	}
 	container.ReadinessProbe.InitialDelaySeconds = 5
 
+	container.Lifecycle.PostStart.Exec.Command = []string{"echo", "foobar"}
+
 	if container.Resources.Limits == nil {
 		container.Resources.Limits = make(map[corev1.ResourceName]resource.Quantity)
 	}
