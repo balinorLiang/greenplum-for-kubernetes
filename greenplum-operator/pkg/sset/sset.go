@@ -164,7 +164,7 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 	container.Lifecycle = &corev1.Lifecycle{
 		PostStart: &corev1.LifecycleHandler{
 			Exec: &corev1.ExecAction{
-				Command: []string{"echo", "foobarfoo"},
+				Command: []string{"echo", "foobarfoo", ">", "/home/gpadmin/signpost"},
 			},
 		},
 	}
