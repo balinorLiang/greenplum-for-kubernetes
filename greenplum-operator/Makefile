@@ -195,6 +195,7 @@ deploy-operator-impl:
 
 .PHONY: deploy-clean
 deploy-clean:
+	kubectl delete service/greenplum-validating-webhook || true
 	kubectl delete -f ../workspace/my-gp-instance.yaml || true
 	kubectl delete crd greenplumclusters.greenplum.pivotal.io || true
 	kubectl delete crd greenplumpxfservices.greenplum.pivotal.io || true
@@ -203,7 +204,6 @@ deploy-clean:
 	kubectl delete --wait configmap/greenplum-config secrets/ssh-secrets > /dev/null 2>&1 || true
 	helm uninstall greenplum-operator || true
 	kubectl	wait --for=delete deployment.apps/greenplum-operator || true
-	kubectl delete service/greenplum-validating-webhook || true
 	kubectl delete validatingwebhookconfigurations greenplum-validating-webhook-config || true
 	kubectl delete csr greenplum-validating-webhook || true
 	kubectl delete jobs --all || true
