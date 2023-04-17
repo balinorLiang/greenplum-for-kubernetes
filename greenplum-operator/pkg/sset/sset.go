@@ -161,13 +161,13 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 	}
 	container.ReadinessProbe.InitialDelaySeconds = 5
 
-	container.Lifecycle = &corev1.Lifecycle{
-		PostStart: &corev1.LifecycleHandler{
-			Exec: &corev1.ExecAction{
-				Command: []string{"echo", "foobarfoo", ">", "/home/gpadmin/signpost"},
-			},
-		},
-	}
+	// container.Lifecycle = &corev1.Lifecycle{
+	// 	PostStart: &corev1.LifecycleHandler{
+	// 		Exec: &corev1.ExecAction{
+	// 			Command: []string{"echo", "foobarfoo", ">", "/home/gpadmin/signpost"},
+	// 		},
+	// 	},
+	// }
 
 	// container.Lifecycle.PostStart.Exec.Command = []string{"echo", "foobarbarfoo"}
 
