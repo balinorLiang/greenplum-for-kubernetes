@@ -174,20 +174,20 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 	}
 	r.logReconcileResult(operationResult, agentService)
 
-	// greenplumService := &corev1.Service{
-	// 	ObjectMeta: metav1.ObjectMeta{
-	// 		Name:      "greenplum",
-	// 		Namespace: ns,
-	// 	},
-	// }
-	// operationResult, err = ctrl.CreateOrUpdate(ctx, r, greenplumService, func() error {
-	// 	service.ModifyGreenplumService(gpName, greenplumService)
-	// 	return ctrl.SetControllerReference(&greenplumCluster, greenplumService, r.Scheme())
-	// })
-	// if err != nil {
-	// 	return err
-	// }
-	// r.logReconcileResult(operationResult, greenplumService)
+	greenplumService := &corev1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "greenplum",
+			Namespace: ns,
+		},
+	}
+	operationResult, err = ctrl.CreateOrUpdate(ctx, r, greenplumService, func() error {
+		service.ModifyGreenplumService(gpName, greenplumService)
+		return ctrl.SetControllerReference(&greenplumCluster, greenplumService, r.Scheme())
+	})
+	if err != nil {
+		return err
+	}
+	r.logReconcileResult(operationResult, greenplumService)
 
 	serviceAccount := &corev1.ServiceAccount{
 		ObjectMeta: metav1.ObjectMeta{
