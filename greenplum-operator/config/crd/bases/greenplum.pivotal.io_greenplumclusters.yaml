@@ -14529,7 +14529,6 @@ spec:
                 - storageClassName
                 type: object
             required:
-            - loadBalancer
             - masterAndStandby
             - segments
             type: object

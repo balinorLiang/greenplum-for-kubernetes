@@ -21,7 +21,7 @@ type GreenplumClusterSpec struct {
 
 	// YES or NO, specify whether or not to deploy a load-balancer
 	// +kubebuilder:default=false
-	LoadBalancer     bool                        `json:"loadBalancer"`
+	LoadBalancer     bool                        `json:"loadBalancer,omitempty"`
 }
 
 type GreenplumPodSpec struct {
