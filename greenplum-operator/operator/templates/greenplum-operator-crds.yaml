@@ -46,10 +46,9 @@ spec:
             description: GreenplumClusterSpec defines the desired state of GreenplumCluster
             properties:
               loadBalancer:
-                default: "no"
+                default: false
                 description: YES or NO, specify whether or not to deploy a load-balancer
-                pattern: ^(?:yes|Yes|YES|no|No|NO|)$
-                type: string
+                type: boolean
               masterAndStandby:
                 properties:
                   antiAffinity:
@@ -14529,6 +14528,7 @@ spec:
                 - storageClassName
                 type: object
             required:
+            - loadBalancer
             - masterAndStandby
             - segments
             type: object

@@ -20,9 +20,8 @@ type GreenplumClusterSpec struct {
 	PXF              GreenplumPXFSpec              `json:"pxf,omitempty"`
 
 	// YES or NO, specify whether or not to deploy a load-balancer
-	// +kubebuilder:default="no"
-	// +kubebuilder:validation:Pattern=`^(?:yes|Yes|YES|no|No|NO|)$`
-	LoadBalancer     string                        `json:"loadBalancer,omitempty"`
+	// +kubebuilder:default=false
+	LoadBalancer     bool                        `json:"loadBalancer"`
 }
 
 type GreenplumPodSpec struct {
