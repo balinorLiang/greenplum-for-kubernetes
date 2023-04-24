@@ -179,7 +179,8 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 	//greenplumCluster.Spec.Segments.GreenplumPodSpec
 
 	// this might need ToLower?
-	if greenplumCluster.Spec.LoadBalancer == "yes" {
+	// if greenplumCluster.Spec.LoadBalancer == "yes" {
+	if greenplumCluster.Spec.LoadBalancer {
 		greenplumService := &corev1.Service{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      "greenplum",
