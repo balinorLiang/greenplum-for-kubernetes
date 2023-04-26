@@ -187,8 +187,12 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 				Namespace: ns,
 			},
 		}
+		var defaultSpec = (greenplumCluster.Spec.LoadBalancerServiceSpec == nil)
+		if !defaultSpec {
+			greenplumService.Spec = *greenplumCluster.Spec.LoadBalancerServiceSpec
+		}
 		operationResult, err = ctrl.CreateOrUpdate(ctx, r, greenplumService, func() error {
-			service.ModifyGreenplumService(gpName, greenplumService)
+			service.ModifyGreenplumService(gpName, greenplumService, defaultSpec)
 			return ctrl.SetControllerReference(&greenplumCluster, greenplumService, r.Scheme())
 		})
 		if err != nil {

@@ -3,7 +3,7 @@ kind: "GreenplumCluster"
 metadata:
   name: my-greenplum
 spec:
-  # loadBalancer: no
+  loadBalancer: yes
   masterAndStandby:
     hostBasedAuthentication: |
       # host   all   gpadmin   0.0.0.0/0   trust
