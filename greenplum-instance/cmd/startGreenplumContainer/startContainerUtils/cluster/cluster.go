@@ -55,6 +55,7 @@ func New(
 }
 
 func (c *Cluster) Initialize() error {
+	fmt.Println("c.Config", c.Config)
 	PrintMessage(c.Stdout, "Initializing Greenplum for Kubernetes Cluster")
 	_, err := c.Filesystem.Stat(masterDataDir)
 	if _, ok := err.(*os.PathError); !ok {
