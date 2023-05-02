@@ -5,16 +5,17 @@ import (
 	"io"
 	"os"
 	"strings"
-	"context"
+	"io/ioutil"
+	// "context"
 
 	"github.com/blang/vfs"
 	"github.com/pivotal/greenplum-for-kubernetes/pkg/commandable"
 	"github.com/pivotal/greenplum-for-kubernetes/pkg/instanceconfig"
 	"github.com/pkg/errors"
-	ctrl "sigs.k8s.io/controller-runtime"
-	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
-	"k8s.io/client-go/kubernetes"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	// ctrl "sigs.k8s.io/controller-runtime"
+	// "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
+	// "k8s.io/client-go/kubernetes"
+	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 
 
@@ -114,26 +115,30 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
+	if data, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace"); err == nil {
+		fmt.Println("data", data)
+	}
+
 	// This really doesn't seem correct
-	mgr, _ := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
-		Scheme: scheme.Scheme,
-		MetricsBindAddress: ":8080",
-	})
+	// mgr, _ := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+	// 	Scheme: scheme.Scheme,
+	// 	MetricsBindAddress: ":8080",
+	// })
 
-	cfg := mgr.GetConfig()
+	// cfg := mgr.GetConfig()
 
-	kubeClientSet, _ := kubernetes.NewForConfig(cfg)
-	// ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	// defer cancel()
-	ctx := context.Background()
+	// kubeClientSet, _ := kubernetes.NewForConfig(cfg)
+	// // ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	// // defer cancel()
+	// ctx := context.Background()
 
-	secretlist, _ := kubeClientSet.CoreV1().Secrets("default").List(ctx, metav1.ListOptions{})
+	// secretlist, _ := kubeClientSet.CoreV1().Secrets("default").List(ctx, metav1.ListOptions{})
 
-	secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
+	// secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
 
-	fmt.Fprintf(g.Stdout, "secretlist: %v\n", secretlist)
-	fmt.Fprintf(g.Stdout, "secret: %v\n", secret)
-	fmt.Fprintf(g.Stdout, "secret.Data: %v\n", secret.Data)
+	// fmt.Fprintf(g.Stdout, "secretlist: %v\n", secretlist)
+	// fmt.Fprintf(g.Stdout, "secret: %v\n", secret)
+	// fmt.Fprintf(g.Stdout, "secret.Data: %v\n", secret.Data)
 
 	// import (
 	//     "k8s.io/client-go/kubernetes"
