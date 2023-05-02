@@ -5,11 +5,19 @@ import (
 	"io"
 	"os"
 	"strings"
+	"context"
 
 	"github.com/blang/vfs"
 	"github.com/pivotal/greenplum-for-kubernetes/pkg/commandable"
 	"github.com/pivotal/greenplum-for-kubernetes/pkg/instanceconfig"
 	"github.com/pkg/errors"
+	ctrl "sigs.k8s.io/controller-runtime"
+	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
+	"k8s.io/client-go/kubernetes"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+
+
 )
 
 const GpinitsystemConfigPath = "/home/gpadmin/gpinitsystem_config"
@@ -106,6 +114,38 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
+	mgr, _ := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+		Scheme: scheme.Scheme,
+		MetricsBindAddress: ":8080",
+	})
+
+	cfg := mgr.GetConfig()
+
+	kubeClientSet, _ := kubernetes.NewForConfig(cfg)
+	// ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	// defer cancel()
+	ctx := context.Background()
+
+	secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
+
+	PrintMessage(g.Stdout, "secret:")
+	fmt.Fprintf(g.Stdout, "secret:%v", secret)
+
+	// import (
+	//     "k8s.io/client-go/kubernetes"
+	// )
+	
+	// ...
+
+	// type Controller struct {
+	
+	//     // kubeClientSet is a standard kubernetes clientset
+	//     kubeClientSet kubernetes.Interface
+	// }
+	// // Trying to get just the csr-signer secret not the entire list from openshift-kube-controller-manager-operator namespace
+	// secret, _ := c.kubeClientSet.CoreV1().Secrets("openshift-kube-controller-manager-operator").Get(
+		// ctx, "csr-signer", metav1.GetOptions{})
+	
 	args := []string{"-D", "-a", "-I", GpinitsystemConfigPath, "-e", "foobar"}
 
 	if standby, err := g.configReader.GetStandby(); err != nil {
