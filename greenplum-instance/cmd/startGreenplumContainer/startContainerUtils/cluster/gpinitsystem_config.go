@@ -128,8 +128,7 @@ func (g *gpInitSystem) Run() error {
 
 	secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
 
-	PrintMessage(g.Stdout, "secret:")
-	fmt.Fprintf(g.Stdout, "secret:%v", secret)
+	fmt.Fprintf(g.Stdout, "secret:%v", secret.Data)
 
 	// import (
 	//     "k8s.io/client-go/kubernetes"
