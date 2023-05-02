@@ -114,6 +114,7 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
+	// This really doesn't seem correct
 	mgr, _ := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme: scheme.Scheme,
 		MetricsBindAddress: ":8080",
@@ -126,8 +127,11 @@ func (g *gpInitSystem) Run() error {
 	// defer cancel()
 	ctx := context.Background()
 
+	secretlist, _ := kubeClientSet.CoreV1().Secrets("default").List(ctx, metav1.ListOptions{})
+
 	secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
 
+	fmt.Fprintf(g.Stdout, "secretlist: %v\n", secretlist)
 	fmt.Fprintf(g.Stdout, "secret: %v\n", secret)
 	fmt.Fprintf(g.Stdout, "secret.Data: %v\n", secret.Data)
 
