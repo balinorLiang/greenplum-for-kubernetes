@@ -115,45 +115,45 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
-	if data, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace"); err == nil {
-		fmt.Println("data", data)
-	}
+	// if data, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace"); err == nil {
+		// fmt.Println("data", data)
+	// }
 
 	// This really doesn't seem correct
-	// mgr, _ := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
-	// 	Scheme: scheme.Scheme,
-	// 	MetricsBindAddress: ":8080",
-	// })
+	mgr, _ := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+		Scheme: scheme.Scheme,
+		MetricsBindAddress: ":8080",
+	})
 
-	// cfg := mgr.GetConfig()
+	cfg := mgr.GetConfig()
 
-	// kubeClientSet, _ := kubernetes.NewForConfig(cfg)
-	// // ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	// // defer cancel()
-	// ctx := context.Background()
+	kubeClientSet, _ := kubernetes.NewForConfig(cfg)
+	// ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	// defer cancel()
+	ctx := context.Background()
 
-	// secretlist, _ := kubeClientSet.CoreV1().Secrets("default").List(ctx, metav1.ListOptions{})
+	secretlist, _ := kubeClientSet.CoreV1().Secrets("default").List(ctx, metav1.ListOptions{})
 
-	// secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
+	secret, _ := kubeClientSet.CoreV1().Secrets("default").Get(ctx, "gcr-key", metav1.GetOptions{})
 
-	// fmt.Fprintf(g.Stdout, "secretlist: %v\n", secretlist)
-	// fmt.Fprintf(g.Stdout, "secret: %v\n", secret)
-	// fmt.Fprintf(g.Stdout, "secret.Data: %v\n", secret.Data)
+	fmt.Fprintf(g.Stdout, "secretlist: %v\n", secretlist)
+	fmt.Fprintf(g.Stdout, "secret: %v\n", secret)
+	fmt.Fprintf(g.Stdout, "secret.Data: %v\n", secret.Data)
 
-	// import (
-	//     "k8s.io/client-go/kubernetes"
-	// )
+	import (
+	    "k8s.io/client-go/kubernetes"
+	)
 	
-	// ...
+	...
 
-	// type Controller struct {
+	type Controller struct {
 	
-	//     // kubeClientSet is a standard kubernetes clientset
-	//     kubeClientSet kubernetes.Interface
-	// }
-	// // Trying to get just the csr-signer secret not the entire list from openshift-kube-controller-manager-operator namespace
-	// secret, _ := c.kubeClientSet.CoreV1().Secrets("openshift-kube-controller-manager-operator").Get(
-		// ctx, "csr-signer", metav1.GetOptions{})
+	    // kubeClientSet is a standard kubernetes clientset
+	    kubeClientSet kubernetes.Interface
+	}
+	// Trying to get just the csr-signer secret not the entire list from openshift-kube-controller-manager-operator namespace
+	secret, _ := c.kubeClientSet.CoreV1().Secrets("openshift-kube-controller-manager-operator").Get(
+		ctx, "csr-signer", metav1.GetOptions{})
 	
 	args := []string{"-D", "-a", "-I", GpinitsystemConfigPath, "-e", "foobar"}
 
