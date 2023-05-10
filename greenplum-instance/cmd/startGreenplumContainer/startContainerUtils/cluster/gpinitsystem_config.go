@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 	"strings"
-	"io/ioutil"
+	// "io/ioutil"
 	"context"
 
 	"github.com/blang/vfs"
