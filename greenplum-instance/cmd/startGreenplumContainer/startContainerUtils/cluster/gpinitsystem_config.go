@@ -6,16 +6,16 @@ import (
 	"os"
 	"strings"
 	"io/ioutil"
-	// "context"
+	"context"
 
 	"github.com/blang/vfs"
 	"github.com/pivotal/greenplum-for-kubernetes/pkg/commandable"
 	"github.com/pivotal/greenplum-for-kubernetes/pkg/instanceconfig"
 	"github.com/pkg/errors"
-	// ctrl "sigs.k8s.io/controller-runtime"
-	// "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
-	// "k8s.io/client-go/kubernetes"
-	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	ctrl "sigs.k8s.io/controller-runtime"
+	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
+	"k8s.io/client-go/kubernetes"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 
 
