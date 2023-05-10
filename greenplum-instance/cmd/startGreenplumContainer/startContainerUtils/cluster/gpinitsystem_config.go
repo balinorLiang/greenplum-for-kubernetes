@@ -140,20 +140,20 @@ func (g *gpInitSystem) Run() error {
 	fmt.Fprintf(g.Stdout, "secret: %v\n", secret)
 	fmt.Fprintf(g.Stdout, "secret.Data: %v\n", secret.Data)
 
-	import (
-	    "k8s.io/client-go/kubernetes"
-	)
+	// import (
+	//     "k8s.io/client-go/kubernetes"
+	// )
 	
-	...
+	// ...
 
-	type Controller struct {
+	// type Controller struct {
 	
-	    // kubeClientSet is a standard kubernetes clientset
-	    kubeClientSet kubernetes.Interface
-	}
-	// Trying to get just the csr-signer secret not the entire list from openshift-kube-controller-manager-operator namespace
-	secret, _ := c.kubeClientSet.CoreV1().Secrets("openshift-kube-controller-manager-operator").Get(
-		ctx, "csr-signer", metav1.GetOptions{})
+	//     // kubeClientSet is a standard kubernetes clientset
+	//     kubeClientSet kubernetes.Interface
+	// }
+	// // Trying to get just the csr-signer secret not the entire list from openshift-kube-controller-manager-operator namespace
+	// secret, _ := c.kubeClientSet.CoreV1().Secrets("openshift-kube-controller-manager-operator").Get(
+	// 	ctx, "csr-signer", metav1.GetOptions{})
 	
 	args := []string{"-D", "-a", "-I", GpinitsystemConfigPath, "-e", "foobar"}
 
