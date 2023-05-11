@@ -116,7 +116,9 @@ func (g *gpInitSystem) Run() error {
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
 	if data, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/super-secret-password/password"); err == nil {
-		fmt.Fprintf(g.Stdout, "secret", data)
+		fmt.Fprintf(g.Stdout, "secret%v\n", data)
+	} else {
+		fmt.Fprintf(g.Stdout, "secret reading error:%v\n", err)
 	}
 
 	// This really doesn't seem correct
