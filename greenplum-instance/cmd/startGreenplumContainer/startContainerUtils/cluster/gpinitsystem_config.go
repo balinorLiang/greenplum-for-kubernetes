@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 	"strings"
-	"io/ioutil"
+	// "io/ioutil"
 	// "context"
 
 	"github.com/blang/vfs"
@@ -115,10 +115,10 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
-	if data, err := ioutil.ReadFile("/var/run/secrets/super-secret-password/password"); err == nil {
-		fmt.Fprintf(g.Stdout, "secret%v\n", data)
+	if data, err := os.ReadFile("/var/run/secrets/super-secret-password/password"); err == nil {
+		fmt.Fprintf(g.Stdout, "secret: %v\n", data)
 	} else {
-		fmt.Fprintf(g.Stdout, "secret reading error:%v\n", err)
+		fmt.Fprintf(g.Stdout, "secret reading error: %v\n", err)
 	}
 
 	// This really doesn't seem correct
