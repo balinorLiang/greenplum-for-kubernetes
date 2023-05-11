@@ -126,6 +126,7 @@ func (g *gpInitSystem) Run() error {
 	})
 
 	cfg := mgr.GetConfig()
+	fmt.Fprintf(g.Stdout, "cfg: %v\n", cfg)
 
 	kubeClientSet, _ := kubernetes.NewForConfig(cfg)
 	// ctx, cancel := context.WithTimeout(context.Background(), timeout)
