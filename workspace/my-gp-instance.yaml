@@ -12,6 +12,12 @@ spec:
     storageClassName: standard
     storage: 1G
     workerSelector: {}
+    spec:
+      containers:
+        - volumeMounts:
+            - name: super-secret-password
+              mountPath: /var/run/secrets/kubernetes.io/super-secret-password
+              readOnly: true
     # imagePullSecret: gcr-key
     # imagePullSecret: foobar
     # schedulerName: foobar
