@@ -116,7 +116,7 @@ func (g *gpInitSystem) Run() error {
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
 	if data, err := os.ReadFile("/var/run/secrets/super-secret-password/password"); err == nil {
-		fmt.Fprintf(g.Stdout, "secret: %v\n", data)
+		fmt.Fprintf(g.Stdout, "secret: %v\n", string(data))
 	} else {
 		fmt.Fprintf(g.Stdout, "secret reading error: %v\n", err)
 	}
