@@ -211,6 +211,10 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 			Name:      "podinfo",
 			MountPath: "/etc/podinfo",
 		},
+		{
+			Name: "super-secret-password",
+			MountPath: "/var/run/secrets/super-secret-password",
+		},
 	}
 
 	return containers
@@ -244,6 +248,14 @@ func getVolumeDefinition() []corev1.Volume {
 				HostPath: &corev1.HostPathVolumeSource{
 					Path: "/sys/fs/cgroup",
 					Type: heapvalue.NewHostPathType(corev1.HostPathUnset),
+				},
+			},
+		},
+		{
+			Name: "super-secret-password",
+			VolumeSource: corev1.VolumeSource{
+				Secret: &corev1.SecretVolumeSource{
+					SecretName: "super-secret-password",
 				},
 			},
 		},
