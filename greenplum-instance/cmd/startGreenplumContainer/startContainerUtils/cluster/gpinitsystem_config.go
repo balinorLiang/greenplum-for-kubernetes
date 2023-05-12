@@ -115,10 +115,14 @@ func (g *gpInitSystem) Run() error {
 	}
 	dnsSuffix := strings.TrimSuffix(string(dnsSuffixBytes), "\n")
 
+	password := ""
+
 	if data, err := os.ReadFile("/var/run/secrets/super-secret-password/password"); err == nil {
 		fmt.Fprintf(g.Stdout, "secret: %v\n", string(data))
+		password = string(data)
 	} else {
 		fmt.Fprintf(g.Stdout, "secret reading error: %v\n", err)
+		password = "foobar"
 	}
 
 	// This really doesn't seem correct
@@ -158,7 +162,7 @@ func (g *gpInitSystem) Run() error {
 	// secret, _ := c.kubeClientSet.CoreV1().Secrets("openshift-kube-controller-manager-operator").Get(
 	// 	ctx, "csr-signer", metav1.GetOptions{})
 	
-	args := []string{"-D", "-a", "-I", GpinitsystemConfigPath, "-e", "foobar"}
+	args := []string{"-D", "-a", "-I", GpinitsystemConfigPath, "-e", password}
 
 	if standby, err := g.configReader.GetStandby(); err != nil {
 		return err
