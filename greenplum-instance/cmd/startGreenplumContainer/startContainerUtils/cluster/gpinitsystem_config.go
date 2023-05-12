@@ -109,10 +109,9 @@ func (g *gpInitSystem) Run() error {
 	password := ""
 
 	if data, err := os.ReadFile("/var/run/secrets/gpadmin-password/password"); err == nil {
-		fmt.Fprintf(g.Stdout, "secret: %v\n", string(data))
 		password = string(data)
 	} else {
-		fmt.Fprintf(g.Stdout, "secret reading error: %v\n", err)
+		fmt.Fprintf(g.Stdout, "Error reading secret gpadmin-password/password: %v\n", err)
 		password = "foobar"
 	}
 
@@ -128,8 +127,6 @@ func (g *gpInitSystem) Run() error {
 	// if err == nil {
 	// 	args = append(args, "-p", "/etc/config/GUCs")
 	// }
-
-	fmt.Fprintln(os.Stderr, fmt.Sprintf("args to gpinitsystem: %#v", args))
 
 	cmd := g.greenplumCommand.Command("/usr/local/greenplum-db/bin/gpinitsystem", args...)
 	cmd.Stdout = g.Stdout
