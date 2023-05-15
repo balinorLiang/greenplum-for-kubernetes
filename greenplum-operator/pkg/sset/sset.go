@@ -105,14 +105,14 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
-	needed_pvcs := len(&params.GpPodSpec.PersistentVolumeClaims) - len(pvcs)
+	needed_pvcs := len(params.GpPodSpec.PersistentVolumeClaims) - len(pvcs)
 	if needed_pvcs > 0 {
 		pvcs = append(pvcs, make([]corev1.PersistentVolumeClaim, needed_pvcs)...)
 	}
 	var pvc *corev1.PersistentVolumeClaim
-	for i, spec := range &params.GpPodSpec.PersistentVolumeClaims {
+	for i, spec := range params.GpPodSpec.PersistentVolumeClaims {
 		pvc = &pvcs[i]
-		pvc.Name = params.ClusterName + "-" + &spec.Name
+		pvc.Name = params.ClusterName + "-" + spec.Name
 		pvc.Spec.StorageClassName = &spec.StorageClassName
 		pvc.Spec.AccessModes = []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce}
 		pvc.Spec.Resources = corev1.ResourceRequirements{
