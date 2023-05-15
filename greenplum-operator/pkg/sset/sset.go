@@ -105,23 +105,42 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
-	var pvc *corev1.PersistentVolumeClaim
-	if len(pvcs) == 0 {
-		pvcs = make([]corev1.PersistentVolumeClaim, 1)
+	needed_pvcs := len(&params.GpPodSpec.persistentVolumeClaims) - len(pvcs)
+	if needed_pvcs > 0 {
+		pvcs = append(pvcs, make([]corev1.PersistentVolumeClaim, needed_pvcs))
 	}
-	pvc = &pvcs[0]
-	pvc.Name = params.ClusterName + "-pgdata"
-	pvc.Spec.StorageClassName = &params.GpPodSpec.StorageClassName
-	pvc.Spec.AccessModes = []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce}
-	pvc.Spec.Resources = corev1.ResourceRequirements{
-		Limits: corev1.ResourceList{
-			corev1.ResourceStorage: params.GpPodSpec.Storage,
-		},
-		Requests: corev1.ResourceList{
-			corev1.ResourceStorage: params.GpPodSpec.Storage,
-		},
+	for i, spec := range &params.GpPodSpec.persistantVolumeClaims {
+		pvc = &pvcs[i]
+		pvc.Name = params.ClusterName + "-" + &spec.Name
+		pvc.Spec.StorageClassName = &spec.StorageClassName
+		pvc.Spec.AccessModes = []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce}
+		pvc.Spec.Resources = corev1.ResourceRequirements{
+			Limits: corev1.ResourceList{
+				corev1.ResourceStorage: spec.Storage,
+			},
+			Requests: corev1.ResourceList{
+				corev1.ResourceStorage: spec.Storage,
+			},
+		}
 	}
 	return pvcs
+	// var pvc *corev1.PersistentVolumeClaim
+	// if len(pvcs) == 0 {
+	// 	pvcs = make([]corev1.PersistentVolumeClaim, 1)
+	// }
+	// pvc = &pvcs[0]
+	// pvc.Name = params.ClusterName + "-pgdata"
+	// pvc.Spec.StorageClassName = &params.GpPodSpec.StorageClassName
+	// pvc.Spec.AccessModes = []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce}
+	// pvc.Spec.Resources = corev1.ResourceRequirements{
+	// 	Limits: corev1.ResourceList{
+	// 		corev1.ResourceStorage: params.GpPodSpec.Storage,
+	// 	},
+	// 	Requests: corev1.ResourceList{
+	// 		corev1.ResourceStorage: params.GpPodSpec.Storage,
+	// 	},
+	// }
+	// return pvcs
 }
 
 func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []corev1.Container) []corev1.Container {

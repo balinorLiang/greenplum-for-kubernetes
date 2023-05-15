@@ -402,6 +402,36 @@ spec:
                       3.5, etc.
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
+                  persistentVolumeClaims:
+                    description: For now let's just do a little thing that does Name,
+                      Storage, and StorageClassName? The other option is a full spec,
+                      I guess
+                    items:
+                      properties:
+                        name:
+                          description: Name of the PV (will be prepended with the
+                            Cluster Name)
+                          minLength: 1
+                          type: string
+                        storage:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Quantity expressed with an SI suffix, like
+                            2Gi, 200m, 3.5, etc.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        storageClassName:
+                          description: Name of storage class to use for statefulset
+                            PVs
+                          minLength: 1
+                          type: string
+                      required:
+                      - name
+                      - storage
+                      - storageClassName
+                      type: object
+                    type: array
                   schedulerName:
                     description: Name of scheduler to be used for statefulset pods
                     type: string
@@ -7583,26 +7613,13 @@ spec:
                       master
                     pattern: ^(?:yes|Yes|YES|no|No|NO|)$
                     type: string
-                  storage:
-                    anyOf:
-                    - type: integer
-                    - type: string
-                    description: Quantity expressed with an SI suffix, like 2Gi, 200m,
-                      3.5, etc.
-                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
-                    x-kubernetes-int-or-string: true
-                  storageClassName:
-                    description: Name of storage class to use for statefulset PVs
-                    minLength: 1
-                    type: string
                   workerSelector:
                     additionalProperties:
                       type: string
                     description: A set of node labels for scheduling pods
                     type: object
                 required:
-                - storage
-                - storageClassName
+                - persistentVolumeClaims
                 type: object
               pxf:
                 properties:
@@ -7646,6 +7663,36 @@ spec:
                       number of mirror segments
                     pattern: ^(?:yes|Yes|YES|no|No|NO|)$
                     type: string
+                  persistentVolumeClaims:
+                    description: For now let's just do a little thing that does Name,
+                      Storage, and StorageClassName? The other option is a full spec,
+                      I guess
+                    items:
+                      properties:
+                        name:
+                          description: Name of the PV (will be prepended with the
+                            Cluster Name)
+                          minLength: 1
+                          type: string
+                        storage:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Quantity expressed with an SI suffix, like
+                            2Gi, 200m, 3.5, etc.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        storageClassName:
+                          description: Name of storage class to use for statefulset
+                            PVs
+                          minLength: 1
+                          type: string
+                      required:
+                      - name
+                      - storage
+                      - storageClassName
+                      type: object
+                    type: array
                   primarySegmentCount:
                     description: Number of primary segments to create
                     format: int32
@@ -14827,27 +14874,14 @@ spec:
                     required:
                     - containers
                     type: object
-                  storage:
-                    anyOf:
-                    - type: integer
-                    - type: string
-                    description: Quantity expressed with an SI suffix, like 2Gi, 200m,
-                      3.5, etc.
-                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
-                    x-kubernetes-int-or-string: true
-                  storageClassName:
-                    description: Name of storage class to use for statefulset PVs
-                    minLength: 1
-                    type: string
                   workerSelector:
                     additionalProperties:
                       type: string
                     description: A set of node labels for scheduling pods
                     type: object
                 required:
+                - persistentVolumeClaims
                 - primarySegmentCount
-                - storage
-                - storageClassName
                 type: object
             required:
             - masterAndStandby
