@@ -37,7 +37,7 @@ type GreenplumPodSpec struct {
 
 	// For now let's just do a little thing that does Name, Storage, and StorageClassName?
 	// The other option is a full spec, I guess
-	persistentVolumeClaims []PersistentVolumeClaim `json:"persistentVolumeClaims"`
+	PersistentVolumeClaims []PersistentVolumeClaim `json:"persistentVolumeClaims"`
 	
 	// // Name of storage class to use for statefulset PVs
 	// // +kubebuilder:validation:MinLength=1
