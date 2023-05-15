@@ -56,9 +56,6 @@ func GenerateStatefulSetParams(ssetType StatefulSetType, cluster *greenplumv1.Gr
 }
 
 func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1.StatefulSet) {
-	// fmt.Println(params.GpPodSpec.Spec)
-	// fmt.Println(params.GpPodSpec.Spec.RestartPolicy)
-	// fmt.Println(*params.GpPodSpec.Spec.TerminationGracePeriodSeconds)
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
 	if sset.Labels == nil {
@@ -84,24 +81,17 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 
 	templateSpec := &sset.Spec.Template.Spec
-	// fmt.Println(*templateSpec)
 	templateSpec.DNSConfig = &corev1.PodDNSConfig{
 		Searches: []string{headlessServiceName + "." + sset.Namespace + ".svc.cluster.local"},
 	}
 	if len(params.GpPodSpec.WorkerSelector) > 0 {
 		templateSpec.NodeSelector = params.GpPodSpec.WorkerSelector
 	}
-	fmt.Println(params.GpPodSpec.ImagePullSecret)
 	templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
 		{
 			Name: params.GpPodSpec.ImagePullSecret,
 		},
 	}
-	// templateSpec.ImagePullSecrets = []corev1.LocalObjectReference{
-	// 	{
-	// 		Name: "gcr-key",
-	// 	},
-	// }
 	templateSpec.Containers = modifyGreenplumContainer(params, templateSpec.Containers)
 	templateSpec.Volumes = getVolumeDefinition()
 	// doesn't this need strings.ToLower? Does the json loader handle this?
@@ -112,7 +102,6 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
-	// fmt.Println(*templateSpec)
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
@@ -161,16 +150,6 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 		},
 	}
 	container.ReadinessProbe.InitialDelaySeconds = 5
-
-	// container.Lifecycle = &corev1.Lifecycle{
-	// 	PostStart: &corev1.LifecycleHandler{
-	// 		Exec: &corev1.ExecAction{
-	// 			Command: []string{"echo", "foobarfoo", ">", "/home/gpadmin/signpost"},
-	// 		},
-	// 	},
-	// }
-
-	// container.Lifecycle.PostStart.Exec.Command = []string{"echo", "foobarbarfoo"}
 
 	if container.Resources.Limits == nil {
 		container.Resources.Limits = make(map[corev1.ResourceName]resource.Quantity)
