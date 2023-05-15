@@ -22,10 +22,10 @@ func (h *Handler) validateCreateGreenplumCluster(ctx context.Context, newGreenpl
 	if result != nil {
 		return
 	}
-	result = h.validateGreenplumStorageFromPVCs(ctx, newGreenplum)
-	if result != nil {
-		return
-	}
+	// result = h.validateGreenplumStorageFromPVCs(ctx, newGreenplum)
+	// if result != nil {
+	// 	return
+	// }
 	result = h.validatePvcGreenplumVersion(ctx, newGreenplum, "master")
 	if result != nil {
 		return
