@@ -266,8 +266,8 @@ func (in *GreenplumPodSpec) DeepCopyInto(out *GreenplumPodSpec) {
 	*out = *in
 	out.Memory = in.Memory.DeepCopy()
 	out.CPU = in.CPU.DeepCopy()
-	if in.persistentVolumeClaims != nil {
-		in, out := &in.persistentVolumeClaims, &out.persistentVolumeClaims
+	if in.PersistentVolumeClaims != nil {
+		in, out := &in.PersistentVolumeClaims, &out.PersistentVolumeClaims
 		*out = make([]PersistentVolumeClaim, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
