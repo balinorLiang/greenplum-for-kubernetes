@@ -39,40 +39,36 @@ func (s *LabelPvcStarter) Run() error {
 		return err
 	}
 
-	var pvcName string
-	for _, volume := range thisPod.Spec.Volumes {
-		if volume.PersistentVolumeClaim != nil {
-			if pvcName != "" {
-				return errors.New("found more pvc volumes than expected")
-			}
-			pvcName = volume.PersistentVolumeClaim.ClaimName
-		}
-	}
 
 	gpMaj, err := s.GetGreenplumMajorVersion()
 	if err != nil {
 		return err
 	}
 
+	var pvcName string
 	var pvc corev1.PersistentVolumeClaim
-	if err := c.Get(ctx, client.ObjectKey{Namespace: namespace, Name: pvcName}, &pvc); err != nil {
-		return err
-	}
 
-	if pvc.Labels == nil {
-		pvc.Labels = make(map[string]string)
-	}
-	if _, ok := pvc.Labels["greenplum-major-version"]; !ok {
-		origPvc := pvc.DeepCopy()
-		pvc.Labels["greenplum-major-version"] = gpMaj
-		if err := c.Patch(ctx, &pvc, client.MergeFrom(origPvc)); err != nil {
-			return fmt.Errorf("patching pvc label: %w", err)
+	for _, volume := range thisPod.Spec.Volumes {
+		if volume.PersistentVolumeClaim != nil {
+			pvcName = volume.PersistentVolumeClaim.ClaimName
 		}
-	}
-
-	if pvc.Labels["greenplum-major-version"] != gpMaj {
-		return fmt.Errorf("GPDB version on PVC does not match pod version. PVC greenplum-major-version=%s; Pod version: %s",
-			pvc.Labels["greenplum-major-version"], gpMaj)
+		if err := c.Get(ctx, client.ObjectKey{Namespace: namespace, Name: pvcName}, &pvc); err != nil {
+			return err
+		}
+		if pvc.Labels == nil {
+			pvc.Labels = make(map[string]string)
+		}
+		if _, ok := pvc.Labels["greenplum-major-version"]; !ok {
+			origPvc := pvc.DeepCopy()
+			pvc.Labels["greenplum-major-version"] = gpMaj
+			if err := c.Patch(ctx, &pvc, client.MergeFrom(origPvc)); err != nil {
+				return fmt.Errorf("patching pvc label: %w", err)
+			}
+		}
+		if pvc.Labels["greenplum-major-version"] != gpMaj {
+			return fmt.Errorf("GPDB version on PVC does not match pod version. PVC greenplum-major-version=%s; Pod version: %s",
+				pvc.Labels["greenplum-major-version"], gpMaj)
+		}
 	}
 
 	return nil

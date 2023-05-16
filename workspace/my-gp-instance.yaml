@@ -13,6 +13,9 @@ spec:
       - name: pgdata
         storageClassName: standard
         storage: 1G
+      - name: pgdata-2
+        storageClassName: standard
+        storage: 1G
     workerSelector: {}
     # spec:
     #   containers:
@@ -104,8 +107,10 @@ spec:
     primarySegmentCount: 1
     memory: "800Mi"
     cpu: "0.5"
-    storageClassName: standard
-    storage: 2G
+    persistentVolumeClaims:
+      - name: pgdata
+        storageClassName: standard
+        storage: 2G
     workerSelector: {}
     # imagePullSecret: gcr-key
     # imagePullSecret: barfoo
