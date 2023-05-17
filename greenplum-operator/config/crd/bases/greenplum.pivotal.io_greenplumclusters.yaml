@@ -408,6 +408,9 @@ spec:
                       I guess
                     items:
                       properties:
+                        mountPath:
+                          description: Path to mount on
+                          type: string
                         name:
                           description: Name of the PV (will be prepended with the
                             Cluster Name)
@@ -427,6 +430,7 @@ spec:
                           minLength: 1
                           type: string
                       required:
+                      - mountPath
                       - name
                       - storage
                       - storageClassName
@@ -7669,6 +7673,9 @@ spec:
                       I guess
                     items:
                       properties:
+                        mountPath:
+                          description: Path to mount on
+                          type: string
                         name:
                           description: Name of the PV (will be prepended with the
                             Cluster Name)
@@ -7688,6 +7695,7 @@ spec:
                           minLength: 1
                           type: string
                       required:
+                      - mountPath
                       - name
                       - storage
                       - storageClassName

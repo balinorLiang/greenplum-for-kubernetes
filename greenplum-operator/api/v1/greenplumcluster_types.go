@@ -77,6 +77,9 @@ type PersistentVolumeClaim struct {
 
 	// Quantity expressed with an SI suffix, like 2Gi, 200m, 3.5, etc.
 	Storage resource.Quantity `json:"storage"`
+
+	// Path to mount on
+	MountPath string `json:"mountPath"`
 }
 
 type GreenplumMasterAndStandbySpec struct {

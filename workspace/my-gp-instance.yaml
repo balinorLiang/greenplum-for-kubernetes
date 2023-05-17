@@ -13,9 +13,11 @@ spec:
       - name: pgdata
         storageClassName: standard
         storage: 1G
+        mountPath: /greenplum
       - name: pgdata-2
         storageClassName: standard
         storage: 1G
+        mountPath: /greenplum-2
     workerSelector: {}
     # spec:
     #   containers:
@@ -111,6 +113,7 @@ spec:
       - name: pgdata
         storageClassName: standard
         storage: 2G
+        mountPath: /greenplum
     workerSelector: {}
     # imagePullSecret: gcr-key
     # imagePullSecret: barfoo

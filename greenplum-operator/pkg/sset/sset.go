@@ -198,10 +198,10 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 			Name:      "config-volume",
 			MountPath: "/etc/config",
 		},
-		{
-			Name:      params.ClusterName + "-pgdata",
-			MountPath: "/greenplum",
-		},
+		// {
+		// 	Name:      params.ClusterName + "-pgdata",
+		// 	MountPath: "/greenplum",
+		// },
 		{
 			Name:      "cgroups",
 			MountPath: "/sys/fs/cgroup",
@@ -214,6 +214,13 @@ func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []c
 			Name: "gpadmin-password",
 			MountPath: "/var/run/secrets/gpadmin-password",
 		},
+	}
+
+	for _, spec := range params.GpPodSpec.PersistentVolumeClaims {
+		container.VolumeMounts = append(container.VolumeMounts, corev1.VolumeMount{
+			Name: params.ClusterName + "-" + spec.Name,
+			MountPath: spec.MountPath,
+		})
 	}
 
 	return containers
