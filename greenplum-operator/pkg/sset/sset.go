@@ -56,6 +56,7 @@ func GenerateStatefulSetParams(ssetType StatefulSetType, cluster *greenplumv1.Gr
 }
 
 func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1.StatefulSet) {
+	fmt.Println("Getting here in ModifyGreenplumStatefulSet")
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
 	if sset.Labels == nil {
@@ -102,6 +103,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
+	fmt.Println("Finished with modifyGreenplumStatefulSet")
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
