@@ -264,6 +264,8 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 		return ctrl.SetControllerReference(&greenplumCluster, masterStatefulSet, r.Scheme())
 	})
 	if err != nil {
+		fmt.Println("Error modifying masterStatefulSet")
+		fmt.Println(err)
 		return err
 	}
 	r.logReconcileResult(operationResult, masterStatefulSet)
