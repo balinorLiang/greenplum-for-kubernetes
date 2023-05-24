@@ -26,6 +26,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 FROM rockylinux:8.7
 # RUN alternatives --set python3 /usr/bin/python3.9
 RUN yum -y localinstall https://github.com/greenplum-db/gpdb/releases/download/7.0.0-beta.3/open-source-greenplum-db-7.0.0-beta.3-el8-x86_64.rpm
+RUN curl https://raw.githubusercontent.com/greenplum-db/gpdb/master/concourse/scripts/setup_gpadmin_user.bash | bash
 
 # remove gppkg because it's misleading to users in the kubernetes environment
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
