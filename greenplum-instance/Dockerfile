@@ -24,7 +24,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 # build greenplum-instance image from here
 # FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 FROM rockylinux:8.7
-RUN alternatives --set python3 /usr/bin/python3.9
+# RUN alternatives --set python3 /usr/bin/python3.9
 RUN rpm -i https://github.com/greenplum-db/gpdb/releases/download/7.0.0-beta.3/open-source-greenplum-db-7.0.0-beta.3-el8-x86_64.rpm
 
 # remove gppkg because it's misleading to users in the kubernetes environment
