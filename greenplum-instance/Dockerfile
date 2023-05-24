@@ -24,6 +24,14 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 # build greenplum-instance image from here
 # FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 FROM rockylinux:8.7
+
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV GPHOME=/usr/local/greenplum-db
+# ENV PXF_HOME=/usr/local/pxf
+# ENV PXF_BASE=${HOME}/pxf-base
+ENV GOPATH=/usr/local/go
+ENV PATH=${PATH}:/usr/local/go/bin:/usr/local/greenplum-db/bin/
+
 # RUN alternatives --set python3 /usr/bin/python3.9
 RUN yum -y install passwd
 RUN yum -y localinstall https://github.com/greenplum-db/gpdb/releases/download/7.0.0-beta.3/open-source-greenplum-db-7.0.0-beta.3-el8-x86_64.rpm
