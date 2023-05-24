@@ -22,15 +22,18 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     ./cmd/waitForKnownHosts
 
 # build greenplum-instance image from here
-FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
+# FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
+FROM rockylinux:8.7
+RUN alternatives --set python3 /usr/bin/python3.9
+RUN rpm -i https://github.com/greenplum-db/gpdb/releases/download/7.0.0-beta.3/open-source-greenplum-db-7.0.0-beta.3-el8-x86_64.rpm
 
 # remove gppkg because it's misleading to users in the kubernetes environment
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
 
-RUN mv /etc/sudoers /etc/sudoers.bak
-RUN apt-get update
-RUN apt-get -y install sudo iproute2 rsync
-RUN mv /etc/sudoers.bak /etc/sudoers
+# RUN mv /etc/sudoers /etc/sudoers.bak
+# RUN apt-get update
+# RUN apt-get -y install sudo iproute2 rsync
+# RUN mv /etc/sudoers.bak /etc/sudoers
 
 ARG TOOLS_DIR=/tools
 
@@ -74,20 +77,20 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 # RUN apt update
 # RUN apt-get install -y postgresql-12 postgresql-server-dev-12 postgresql-contrib-12
 
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:ubuntugis/ppa
-RUN apt update
-RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev libgeos-doc \
-    # gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
-    proj-bin \
-    libxml2 libxml2-dev \
-    libjson-c-dev \
-    protobuf-c-compiler protobuf-compiler libprotobuf-c1 libprotobuf-c-dev \
-    autoconf \
-    expat \
-    libcunit1 libcunit1-dev
-    # postgresql-12-dev
-    # libjson-c libjson-c-dev
+# RUN apt-get install -y software-properties-common
+# RUN add-apt-repository -y ppa:ubuntugis/ppa
+# RUN apt update
+# RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev libgeos-doc \
+#     # gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
+#     proj-bin \
+#     libxml2 libxml2-dev \
+#     libjson-c-dev \
+#     protobuf-c-compiler protobuf-compiler libprotobuf-c1 libprotobuf-c-dev \
+#     autoconf \
+#     expat \
+#     libcunit1 libcunit1-dev
+#     # postgresql-12-dev
+#     # libjson-c libjson-c-dev
 
 # RUN apt install curl ca-certificates gnupg
 # RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
@@ -129,9 +132,9 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
 # ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
-RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
-    dpkg -i tini_0.19.0-amd64.deb && \
-    rm tini_0.19.0-amd64.deb
+# RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
+#     dpkg -i tini_0.19.0-amd64.deb && \
+#     rm tini_0.19.0-amd64.deb
 # ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
 ENTRYPOINT ["/usr/bin/tini", "--"]
 # ENTRYPOINT ["/bin/bash", "-c", "echo $1; while true; do sleep 30; done; "]
