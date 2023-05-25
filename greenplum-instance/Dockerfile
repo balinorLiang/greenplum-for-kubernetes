@@ -25,6 +25,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 # FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
 FROM rockylinux:8.7
 
+
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV GPHOME=/usr/local/greenplum-db
 # ENV PXF_HOME=/usr/local/pxf
