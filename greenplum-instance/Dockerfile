@@ -34,7 +34,7 @@ ENV GOPATH=/usr/local/go
 ENV PATH=${PATH}:/usr/local/go/bin:/usr/local/greenplum-db/bin/
 
 # RUN alternatives --set python3 /usr/bin/python3.9
-RUN yum -y install passwd
+RUN yum -y install passwd sudo
 RUN yum -y localinstall https://github.com/greenplum-db/gpdb/releases/download/7.0.0-beta.3/open-source-greenplum-db-7.0.0-beta.3-el8-x86_64.rpm
 RUN curl https://raw.githubusercontent.com/greenplum-db/gpdb/master/concourse/scripts/setup_gpadmin_user.bash > ./setup_gpadmin_user.bash
 RUN sed -i '/gpdb_src/d' ./setup_gpadmin_user.bash
