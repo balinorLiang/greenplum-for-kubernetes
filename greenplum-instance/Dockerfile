@@ -146,7 +146,7 @@ RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 # ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
-RUN yum install tini
+RUN yum -y localinstall https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0.rpm
 # RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
 #     dpkg -i tini_0.19.0-amd64.deb && \
 #     rm tini_0.19.0-amd64.deb
