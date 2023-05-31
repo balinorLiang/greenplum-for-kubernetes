@@ -59,6 +59,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	// fmt.Println("Getting here in ModifyGreenplumStatefulSet")
 	// "StatefulSet.apps \"master\" is invalid: spec: Forbidden: updates to statefulset spec for fields other than 'replicas', 'template', 'updateStrategy', 'persistentVolumeClaimRetentionPolicy' and 'minReadySeconds' are forbidden"
 	fmt.Println("Create (not update): ", create)
+	fmt.Println("first pvc storage: ", params.GpPodSpec.PersistentVolumeClaims[0].Storage)
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
 	if create {
