@@ -289,7 +289,11 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 		},
 	}
 	operationResult, err = ctrl.CreateOrUpdate(ctx, r, primaryStatefulSet, func() error {
-		sset.ModifyGreenplumStatefulSet(primaryStatefulSetParams, primaryStatefulSet)
+		key := client.ObjectKeyFromObject(primaryStatefulSet)
+		err := r.Get(ctx, key, primaryStatefulSet)
+		create := apierrs.IsNotFound(err)
+
+		sset.ModifyGreenplumStatefulSet(primaryStatefulSetParams, primaryStatefulSet, create)
 		return controllerutil.SetControllerReference(&greenplumCluster, primaryStatefulSet, r.Scheme())
 	})
 	if err != nil {
@@ -311,7 +315,11 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 			},
 		}
 		operationResult, err = ctrl.CreateOrUpdate(ctx, r, mirrorStatefulSet, func() error {
-			sset.ModifyGreenplumStatefulSet(mirrorStatefulSetParams, mirrorStatefulSet)
+			key := client.ObjectKeyFromObject(mirrorStatefulSet)
+			err := r.Get(ctx, key, mirrorStatefulSet)
+			create := apierrs.IsNotFound(err)
+
+			sset.ModifyGreenplumStatefulSet(mirrorStatefulSetParams, mirrorStatefulSet, create)
 			return ctrl.SetControllerReference(&greenplumCluster, mirrorStatefulSet, r.Scheme())
 		})
 		if err != nil {
