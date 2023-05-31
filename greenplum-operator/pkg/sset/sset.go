@@ -56,24 +56,30 @@ func GenerateStatefulSetParams(ssetType StatefulSetType, cluster *greenplumv1.Gr
 }
 
 func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1.StatefulSet, create bool) {
-	fmt.Println("Getting here in ModifyGreenplumStatefulSet")
+	// fmt.Println("Getting here in ModifyGreenplumStatefulSet")
+	// "StatefulSet.apps \"master\" is invalid: spec: Forbidden: updates to statefulset spec for fields other than 'replicas', 'template', 'updateStrategy', 'persistentVolumeClaimRetentionPolicy' and 'minReadySeconds' are forbidden"
 	fmt.Println("Create (not update): ", create)
 	labels := generateGPClusterLabels(sset.Name, params.ClusterName)
 
-	if sset.Labels == nil {
-		sset.Labels = make(map[string]string)
-	}
-	for key, value := range labels {
-		sset.Labels[key] = value
+	if create {
+		if sset.Labels == nil {
+			sset.Labels = make(map[string]string)
+		}
+		for key, value := range labels {
+			sset.Labels[key] = value
+		}
 	}
 
 	sset.Spec.Replicas = &params.Replicas
-	sset.Spec.Selector = &metav1.LabelSelector{
-		MatchLabels: labels,
+
+	if create {
+		sset.Spec.Selector = &metav1.LabelSelector{
+			MatchLabels: labels,
+		}
+		sset.Spec.ServiceName = headlessServiceName
+		sset.Spec.PodManagementPolicy = appsv1.ParallelPodManagement
+		sset.Spec.VolumeClaimTemplates = modifyGreenplumPVC(params, sset.Spec.VolumeClaimTemplates)
 	}
-	sset.Spec.ServiceName = headlessServiceName
-	sset.Spec.PodManagementPolicy = appsv1.ParallelPodManagement
-	sset.Spec.VolumeClaimTemplates = modifyGreenplumPVC(params, sset.Spec.VolumeClaimTemplates)
 
 	if sset.Spec.Template.Labels == nil {
 		sset.Spec.Template.Labels = make(map[string]string)
@@ -104,7 +110,7 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	if len(params.GpPodSpec.SchedulerName) > 0 {
 		templateSpec.SchedulerName = params.GpPodSpec.SchedulerName
 	}
-	fmt.Println("Finished with modifyGreenplumStatefulSet")
+	// fmt.Println("Finished with modifyGreenplumStatefulSet")
 }
 
 func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.PersistentVolumeClaim) []corev1.PersistentVolumeClaim {
