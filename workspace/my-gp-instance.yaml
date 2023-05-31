@@ -112,7 +112,7 @@ spec:
     persistentVolumeClaims:
       - name: pgdata
         storageClassName: standard
-        storage: 2G
+        storage: 1G
         mountPath: /greenplum
     workerSelector: {}
     # imagePullSecret: gcr-key

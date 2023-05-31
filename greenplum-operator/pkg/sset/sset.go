@@ -79,8 +79,8 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 		}
 		sset.Spec.ServiceName = headlessServiceName
 		sset.Spec.PodManagementPolicy = appsv1.ParallelPodManagement
-		sset.Spec.VolumeClaimTemplates = modifyGreenplumPVC(params, sset.Spec.VolumeClaimTemplates)
 	}
+	sset.Spec.VolumeClaimTemplates = modifyGreenplumPVC(params, sset.Spec.VolumeClaimTemplates)
 
 	if sset.Spec.Template.Labels == nil {
 		sset.Spec.Template.Labels = make(map[string]string)
