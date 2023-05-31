@@ -263,10 +263,10 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 		key := client.ObjectKeyFromObject(masterStatefulSet)
 		err := r.Get(ctx, key, masterStatefulSet)
 		create := apierrs.IsNotFound(err)
-		fmt.Println("Create (not update): ", create)
+		// fmt.Println("Create (not update): ", create)
 		// fmt.Println("Error getting masterStatefulSet")
 		// fmt.Println(err)
-		sset.ModifyGreenplumStatefulSet(masterStatefulSetParams, masterStatefulSet)
+		sset.ModifyGreenplumStatefulSet(masterStatefulSetParams, masterStatefulSet, create)
 		return ctrl.SetControllerReference(&greenplumCluster, masterStatefulSet, r.Scheme())
 	})
 	if err != nil {
