@@ -123,7 +123,7 @@ func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.Persis
 	for i, spec := range params.GpPodSpec.PersistentVolumeClaims {
 		pvc = &pvcs[i]
 		pvc.Name = params.ClusterName + "-" + spec.Name
-		pvc.Spec.StorageClassName = &spec.StorageClassName
+		// pvc.Spec.StorageClassName = &spec.StorageClassName
 		pvc.Spec.AccessModes = []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce}
 		pvc.Spec.Resources = corev1.ResourceRequirements{
 			Limits: corev1.ResourceList{
@@ -133,6 +133,10 @@ func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.Persis
 				corev1.ResourceStorage: spec.Storage,
 			},
 		}
+		//TODO remove hardcoding
+		storageClassName := "topolvm-provisioner"
+		pvc.Spec.StorageClassName = &storageClassName
+		pvc.ObjectMeta.Annotations = map[string]string{"resize.topolvm.io/storage_limit": "10Gi"}
 	}
 	return pvcs
 	// var pvc *corev1.PersistentVolumeClaim
