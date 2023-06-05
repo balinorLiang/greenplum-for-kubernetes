@@ -95,7 +95,6 @@ func (g *CertificateGenerator) ApproveCertificateSigningRequest(csr *v1.Certific
 func (g *CertificateGenerator) WaitForSignedCertificate(csr *v1.CertificateSigningRequest, timeout time.Duration) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	// return k8scsr.WaitForCertificate(ctx, g.KubeClientSet.CertificatesV1beta1().CertificateSigningRequests(), csr)
 	return k8scsr.WaitForCertificate(ctx, g.KubeClientSet, csr.Name, csr.UID)
 }
 

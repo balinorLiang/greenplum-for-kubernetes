@@ -69,17 +69,10 @@ RUN \
 ENV PXF_CONF=/etc/pxf
 RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
-# RUN apt install curl ca-certificates gnupg
-# RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
-# RUN echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-# RUN apt update
-# RUN apt-get install -y postgresql-12 postgresql-server-dev-12 postgresql-contrib-12
-
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:ubuntugis/ppa
 RUN apt update
 RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev libgeos-doc \
-    # gdal-bin gdal-data libgdal-dev libgdal-doc libgdal20  python3-gdal  \
     proj-bin \
     libxml2 libxml2-dev \
     libjson-c-dev \
@@ -87,55 +80,12 @@ RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev li
     autoconf \
     expat \
     libcunit1 libcunit1-dev
-    # postgresql-12-dev
-    # libjson-c libjson-c-dev
-
-# RUN apt install curl ca-certificates gnupg
-# RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
-# RUN echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-# # RUN wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8 | apt-key add -
-# RUN apt update
-# RUN apt install -y postgresql-12-postgis-2.5
-# # RUN apt install -y postgresql-12-postgis-scripts
-# RUN apt install -y postgis
-
-# RUN wget https://download.osgeo.org/postgis/source/postgis-3.3.2.tar.gz
-# RUN tar -xzf postgis-3.3.2.tar.gz
-# WORKDIR /workspace/postgis-3.3.2
-# RUN ./configure
-# RUN make
-# RUN make install
-
-# RUN wget https://download.osgeo.org/gdal/1.11.1/gdal-1.11.1.tar.gz
-# RUN tar zxf gdal-1.11.1.tar.gz
-# WORKDIR /workspace/gdal-1.11.1
-# RUN ./configure --prefix=$GPHOME
-# RUN make
-# RUN make install
-
-# WORKDIR /workspace
-
-# RUN wget https://github.com/greenplum-db/geospatial/archive/refs/heads/main.zip
-# RUN unzip main.zip
-# WORKDIR /workspace/geospatial-main/postgis/build/postgis-2.5.4
-# RUN ./autogen.sh
-# RUN ./configure --with-pgconfig=$GPHOME/bin/pg_config --with-raster --without-topology --prefix=$GPHOME
-# RUN make USE_PGXS=1 clean all install
-
-# WORKDIR /workspace
-
-# RUN cp -r /usr/share/postgresql/12/extension/postgis* /usr/local/greenplum-db/share/postgresql/extension/
-# RUN cp -r /usr/share/postgresql/12/contrib/postgis* /usr/local/greenplum-db/share/postgresql/contrib/
-# RUN cp -r /usr/lib/postgresql/12/lib/*postgis* /usr/local/greenplum-db/lib/postgresql
-# ENV libdir=/usr/local/greenplum-db/share/postgresql/contrib/
 
 # Install tini
 RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
     dpkg -i tini_0.19.0-amd64.deb && \
     rm tini_0.19.0-amd64.deb
-# ENTRYPOINT ["/usr/bin/tini", "-vvv", "--"]
 ENTRYPOINT ["/usr/bin/tini", "--"]
-# ENTRYPOINT ["/bin/bash", "-c", "echo $1; while true; do sleep 30; done; "]
 
 USER gpadmin
 
@@ -150,8 +100,6 @@ RUN ln -s ${TOOLS_DIR} /home/gpadmin/tools
 
 # Initialize pxf directories; needs GPHOME set
 RUN /bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
-
-# USER root
 
 EXPOSE 22
 

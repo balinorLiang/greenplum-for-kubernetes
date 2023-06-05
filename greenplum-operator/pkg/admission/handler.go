@@ -1,7 +1,6 @@
 package admission
 
 import (
-	// "fmt"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -11,7 +10,6 @@ import (
 
 	greenplumv1 "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/api/v1"
 	"github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/executor"
-	// "github.com/pivotal/greenplum-for-kubernetes/greenplum-operator/pkg/scheme"
 	admissionv1 "k8s.io/api/admission/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -79,15 +77,6 @@ func (h *Handler) HandleValidate(out http.ResponseWriter, req *http.Request) {
 			Version: reviewRequest.Request.Kind.Version,
 			Kind: reviewRequest.Request.Kind.Kind,
 		}
-
-		// var reqGVK schema.GroupVersionKind
-		// if err := scheme.Scheme.Convert(&reviewRequest.Request.Kind, &reqGVK, nil); err != nil {
-		// 	// Note: this isn't covered by our unit tests, since it's nearly impossible to either happen or to test.
-		// 	rrkindforprinting := fmt.Sprintf("%#v", &reviewRequest.Request.Kind)
-		// 	reqgvkforprinting := fmt.Sprintf("%#v", &reqGVK)
-		// 	response.Result = &metav1.Status{Message: "failed to convert metav1.GVK to schema.GVK: " + err.Error() + " reviewRequest.Request.Kind: " + rrkindforprinting + " reqGVK: " + reqgvkforprinting}
-		// 	return
-		// }
 
 		switch reqGVK {
 		case greenplumv1.GroupVersion.WithKind("GreenplumCluster"):

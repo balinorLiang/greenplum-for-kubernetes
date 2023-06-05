@@ -94,7 +94,6 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 	templateSpec.Containers = modifyGreenplumContainer(params, templateSpec.Containers)
 	templateSpec.Volumes = getVolumeDefinition()
-	// doesn't this need strings.ToLower? Does the json loader handle this?
 	if params.GpPodSpec.AntiAffinity == "yes" {
 		templateSpec.Affinity = getAffinityDefinition(params.Type, sset.Namespace)
 	}

@@ -35,17 +35,9 @@ type GreenplumPodSpec struct {
 	// Quantity expressed with an SI suffix, like 2Gi, 200m, 3.5, etc.
 	CPU resource.Quantity `json:"cpu,omitempty"`
 
-	// For now let's just do a little thing that does Name, Storage, and StorageClassName?
-	// The other option is a full spec, I guess
+	// List of PersistentVolumeClaims
 	PersistentVolumeClaims []PersistentVolumeClaim `json:"persistentVolumeClaims"`
 	
-	// // Name of storage class to use for statefulset PVs
-	// // +kubebuilder:validation:MinLength=1
-	// StorageClassName string `json:"storageClassName"`
-
-	// // Quantity expressed with an SI suffix, like 2Gi, 200m, 3.5, etc.
-	// Storage resource.Quantity `json:"storage"`
-
 	// A set of node labels for scheduling pods
 	WorkerSelector map[string]string `json:"workerSelector,omitempty"`
 
