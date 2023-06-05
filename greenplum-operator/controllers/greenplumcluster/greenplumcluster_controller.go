@@ -174,12 +174,6 @@ func (r *GreenplumClusterReconciler) createOrUpdateClusterResources(ctx context.
 	}
 	r.logReconcileResult(operationResult, agentService)
 
-	//greenplumCluster.Spec.MasterAndStandby.GreenplumPodSpec
-	//greenplumCluster.Spec.Segments.PrimarySegmentCount
-	//greenplumCluster.Spec.Segments.GreenplumPodSpec
-
-	// this might need ToLower?
-	// if greenplumCluster.Spec.LoadBalancer == "yes" {
 	if greenplumCluster.Spec.LoadBalancer {
 		greenplumService := &corev1.Service{
 			ObjectMeta: metav1.ObjectMeta{
