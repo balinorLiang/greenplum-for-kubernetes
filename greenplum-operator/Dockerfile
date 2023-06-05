@@ -1,7 +1,6 @@
 # syntax = docker/dockerfile:experimental
 FROM golang:1.19 as build-in-docker
 
-
 COPY greenplum-operator/ /greenplum-for-kubernetes/greenplum-operator/
 COPY pkg/ /greenplum-for-kubernetes/pkg/
 COPY tools/ /greenplum-for-kubernetes/tools/
@@ -11,15 +10,6 @@ RUN curl -LO "https://dl.k8s.io/release/v1.26.3/bin/linux/amd64/kubectl" \
     && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 WORKDIR /greenplum-for-kubernetes/greenplum-operator
-# RUN apt-get update \
-    # && apt-get install -y kubectl
-# RUN go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
-# # RUN go get -modfile /greenplum-for-kubernetes/tools/go.mod sigs.k8s.io/controller-tools/cmd/controller-gen@v0.10.0
-# RUN ls /usr/local/go/bin
-# RUN controller-gen object:headerFile=./hack/boilerplate.go.txt paths=./api/...
-# Hmm. This seems to not work, since the crds don't end up anywhere useable. This may need to be a separate github action, if we're going to do it with github actions.
-# RUN controller-gen crd:crdVersions=v1 rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases \
-    # && kubectl kustomize config/crd > operator/templates/greenplum-operator-crds.yaml
 
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \

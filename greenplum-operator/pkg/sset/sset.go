@@ -94,7 +94,6 @@ func ModifyGreenplumStatefulSet(params *GreenplumStatefulSetParams, sset *appsv1
 	}
 	templateSpec.Containers = modifyGreenplumContainer(params, templateSpec.Containers)
 	templateSpec.Volumes = getVolumeDefinition()
-	// doesn't this need strings.ToLower? Does the json loader handle this?
 	if params.GpPodSpec.AntiAffinity == "yes" {
 		templateSpec.Affinity = getAffinityDefinition(params.Type, sset.Namespace)
 	}
@@ -125,23 +124,6 @@ func modifyGreenplumPVC(params *GreenplumStatefulSetParams, pvcs []corev1.Persis
 		}
 	}
 	return pvcs
-	// var pvc *corev1.PersistentVolumeClaim
-	// if len(pvcs) == 0 {
-	// 	pvcs = make([]corev1.PersistentVolumeClaim, 1)
-	// }
-	// pvc = &pvcs[0]
-	// pvc.Name = params.ClusterName + "-pgdata"
-	// pvc.Spec.StorageClassName = &params.GpPodSpec.StorageClassName
-	// pvc.Spec.AccessModes = []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce}
-	// pvc.Spec.Resources = corev1.ResourceRequirements{
-	// 	Limits: corev1.ResourceList{
-	// 		corev1.ResourceStorage: params.GpPodSpec.Storage,
-	// 	},
-	// 	Requests: corev1.ResourceList{
-	// 		corev1.ResourceStorage: params.GpPodSpec.Storage,
-	// 	},
-	// }
-	// return pvcs
 }
 
 func modifyGreenplumContainer(params *GreenplumStatefulSetParams, containers []corev1.Container) []corev1.Container {

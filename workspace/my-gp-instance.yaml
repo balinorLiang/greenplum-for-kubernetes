@@ -15,92 +15,6 @@ spec:
         storage: 1G
         mountPath: /greenplum
     workerSelector: {}
-    # spec:
-    #   containers:
-    #     - volumeMounts:
-    #         - name: super-secret-password
-    #           mountPath: /var/run/secrets/kubernetes.io/super-secret-password
-    #           readOnly: true
-    # imagePullSecret: gcr-key
-    # imagePullSecret: foobar
-    # schedulerName: foobar
-    # spec:
-      # restartPolicy: "Always"
-      # terminationGracePeriodSeconds: 60
-    # spec:
-    #     containers:
-    #       - name: greenplum
-    #         image: gcr.io/plaidcloud-build/greenplum-gp4k:latest
-    #         args:
-    #           - /home/gpadmin/tools/startGreenplumContainer
-    #         ports:
-    #           - containerPort: 22
-    #         # protocol: TCP
-    #         env:
-    #           - name: MASTER_DATA_DIRECTORY
-    #             value: /greenplum/data-1
-    #         resources:
-    #           limits:
-    #             cpu: 500m
-    #             memory: 800Mi
-    #           requests:
-    #             cpu: 500m
-    #             memory: 800Mi
-    #         volumeMounts:
-    #           - name: ssh-key-volume
-    #             mountPath: /etc/ssh-key
-    #           - name: config-volume
-    #             mountPath: /etc/config
-    #           - name: my-greenplum-pgdata
-    #             mountPath: /greenplum
-    #           - name: cgroups
-    #             mountPath: /sys/fs/cgroup
-    #           - name: podinfo
-    #             mountPath: /etc/podinfo
-    #           - name: kube-api-access-z8845
-    #             readOnly: true
-    #             mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-    #           - name: super-secret-password
-    #             mountPath: /var/run/secrets/super-secret-password
-    #             readOnly: true
-    #         readinessProbe:
-    #           tcpSocket:
-    #             port: 22
-    #           initialDelaySeconds: 5
-    #           timeoutSeconds: 1
-    #           periodSeconds: 10
-    #           successThreshold: 1
-    #           failureThreshold: 3
-    #         terminationMessagePath: /dev/termination-log
-    #         terminationMessagePolicy: File
-    #         imagePullPolicy: Always
-    #     restartPolicy: Always
-    #     terminationGracePeriodSeconds: 30
-    #     dnsPolicy: ClusterFirst
-    #     serviceAccountName: greenplum-system-pod
-    #     serviceAccount: greenplum-system-pod
-    #     # nodeName: gke-gp-test2-default-pool-529cc55a-b4hl
-    #     securityContext: {}
-    #     imagePullSecrets:
-    #       - name: gcr-key
-    #     hostname: master-0
-    #     subdomain: agent
-    #     schedulerName: default-scheduler
-    #     tolerations:
-    #       - key: node.kubernetes.io/not-ready
-    #         operator: Exists
-    #         effect: NoExecute
-    #         tolerationSeconds: 300
-    #       - key: node.kubernetes.io/unreachable
-    #         operator: Exists
-    #         effect: NoExecute
-    #         tolerationSeconds: 300
-    #     priority: 0
-    #     dnsConfig:
-    #       searches:
-    #         - agent.default.svc.cluster.local
-    #     enableServiceLinks: true
-    #     preemptionPolicy: PreemptLowerPriority
   segments:
     primarySegmentCount: 1
     memory: "800Mi"
@@ -111,9 +25,3 @@ spec:
         storage: 2G
         mountPath: /greenplum
     workerSelector: {}
-    # imagePullSecret: gcr-key
-    # imagePullSecret: barfoo
-    # schedulerName: barfoo
-    # spec:
-    #   restartPolicy: "Always"
-    #   terminationGracePeriodSeconds: 120

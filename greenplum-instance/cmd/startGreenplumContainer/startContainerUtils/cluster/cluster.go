@@ -55,7 +55,6 @@ func New(
 }
 
 func (c *Cluster) Initialize() error {
-	fmt.Println("c.Config", c.Config)
 	PrintMessage(c.Stdout, "Initializing Greenplum for Kubernetes Cluster")
 	_, err := c.Filesystem.Stat(masterDataDir)
 	if _, ok := err.(*os.PathError); !ok {
@@ -154,7 +153,6 @@ func (c *Cluster) RunPostInitialization() error {
 	if err := c.reloadGpConfig(); err != nil {
 		return fmt.Errorf("gpstop failed: %w", err)
 	}
-	PrintMessage(c.Stdout, "Finished reloading greenplum configs")
 
 	if err := c.createPXFExtension(); err != nil {
 		return fmt.Errorf("createPXFExtension failed: %w", err)
