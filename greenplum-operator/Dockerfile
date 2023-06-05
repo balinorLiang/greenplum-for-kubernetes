@@ -25,8 +25,6 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator \
     && go build
-    # cd /greenplum-for-kubernetes/greenplum-operator/cmd/greenplumOperator && /usr/local/go/bin/controller-gen && go build
-
 
 # build greenplum-operator image from here
 FROM cloudfoundry/run:base

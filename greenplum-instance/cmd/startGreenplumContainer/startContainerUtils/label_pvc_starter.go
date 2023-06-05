@@ -2,7 +2,6 @@ package startContainerUtils
 
 import (
 	"context"
-	// "errors"
 	"fmt"
 	"os/exec"
 	"regexp"

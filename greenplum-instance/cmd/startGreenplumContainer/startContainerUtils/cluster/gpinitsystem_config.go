@@ -65,13 +65,11 @@ func (g *gpInitSystem) GenerateConfig() error {
 	}
 	dbID := 1
 	hostname := fmt.Sprintf("master-0.%v", subdomain)
-	// fmt.Fprintf(configFile, "QD_PRIMARY_ARRAY=master-0.%v~5432~/greenplum/data-1~%d~-1~0\n", subdomain, dbID)
 	fmt.Fprintf(configFile, "QD_PRIMARY_ARRAY=%v~%v~5432~/greenplum/data-1~%d~-1~0\n", hostname, hostname, dbID)
 	dbID++
 	fmt.Fprint(configFile, "declare -a PRIMARY_ARRAY=(\n")
 	for segment := 0; segment < segmentCount; segment++ {
 		hostname = fmt.Sprintf("segment-a-%d.%v", segment, subdomain)
-		// fmt.Fprintf(configFile, "segment-a-%d.%v~40000~/greenplum/data~%d~%d\n", segment, subdomain, dbID, segment)
 		fmt.Fprintf(configFile, "%v~%v~40000~/greenplum/data~%d~%d\n", hostname, hostname, dbID, segment)
 
 		dbID++
@@ -85,7 +83,6 @@ func (g *gpInitSystem) GenerateConfig() error {
 			// https://github.com/greenplum-db/gpdb/blob/5X_STABLE/gpMgmt/bin/gpinitsystem#L460
 			// TODO: enhance gpinitsystem to consider the hostname as well? i.e., sdw1:/data != sdw2:/data
 			hostname = fmt.Sprintf("segment-b-%d.%v", segment, subdomain)
-			// fmt.Fprintf(configFile, "segment-b-%d.%v~50000~/greenplum/mirror/data~%d~%d\n", segment, subdomain, dbID, segment)
 			fmt.Fprintf(configFile, "%v~%v~50000~/greenplum/mirror/data~%d~%d\n", hostname, hostname, dbID, segment)
 
 			dbID++

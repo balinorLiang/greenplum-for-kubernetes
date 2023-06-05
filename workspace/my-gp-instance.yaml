@@ -14,10 +14,6 @@ spec:
         storageClassName: standard
         storage: 1G
         mountPath: /greenplum
-      - name: pgdata-2
-        storageClassName: standard
-        storage: 1G
-        mountPath: /greenplum-2
     workerSelector: {}
     # spec:
     #   containers:
