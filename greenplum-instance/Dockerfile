@@ -22,10 +22,16 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     ./cmd/waitForKnownHosts
 
 # build greenplum-instance image from here
-FROM gcr.io/gp-kubernetes/ubuntu-gpdb-ent:${TAG_PREFIX}${GREENPLUM_VERSION}
+FROM gcr.io/plaidcloud-build/greenplum-pxf:latest
+
 
 # remove gppkg because it's misleading to users in the kubernetes environment
 RUN rm -f /usr/local/greenplum-db/bin/gppkg
+
+RUN mv /etc/sudoers /etc/sudoers.bak
+RUN apt-get update
+RUN apt-get -y install sudo iproute2 rsync
+RUN mv /etc/sudoers.bak /etc/sudoers
 
 ARG TOOLS_DIR=/tools
 
@@ -63,6 +69,18 @@ RUN \
 ENV PXF_CONF=/etc/pxf
 RUN mkdir -p ${PXF_CONF} && chown -R gpadmin:gpadmin ${PXF_CONF}
 
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:ubuntugis/ppa
+RUN apt update
+RUN apt-get install -y libgeos-3.7.1 libgeos++-dev  libgeos-c1v5  libgeos-dev libgeos-doc \
+    proj-bin \
+    libxml2 libxml2-dev \
+    libjson-c-dev \
+    protobuf-c-compiler protobuf-compiler libprotobuf-c1 libprotobuf-c-dev \
+    autoconf \
+    expat \
+    libcunit1 libcunit1-dev
+
 # Install tini
 RUN wget https://github.com/krallin/tini/releases/download/v0.19.0/tini_0.19.0-amd64.deb && \
     dpkg -i tini_0.19.0-amd64.deb && \
@@ -81,16 +99,16 @@ WORKDIR /home/gpadmin
 RUN ln -s ${TOOLS_DIR} /home/gpadmin/tools
 
 # Initialize pxf directories; needs GPHOME set
-RUN /bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh && /usr/local/pxf-gp6/bin/pxf init'
+RUN /bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh && /usr/local/pxf/bin/pxf init'
 
 EXPOSE 22
 
 ARG VERSION=dev
 ARG DATE=unknown
-ARG LICENSE="https://network.pivotal.io/legal_documents/vmware_eula"
+ARG LICENSE="https://www.apache.org/licenses/LICENSE-2.0"
 
 LABEL name="Greenplum for Kubernetes" \
-    vendor="Pivotal Software" \
+    vendor="PlaidCloud" \
     version="${VERSION}" \
     build_date="${DATE}" \
     license="${LICENSE}"
