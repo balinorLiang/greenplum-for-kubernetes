@@ -1,5 +1,5 @@
 
-# Greenplum for Kubernetes
+# Greenplum for Kubernetes Release
 
 This repo houses the Helm charts as well as code and resources that go into the
 Docker images for a Greenplum on Kubernetes release.
@@ -10,17 +10,19 @@ git clone git@github.com:greenplum-db/greenplum-for-kubernetes.git
 
 ## Table of Contents
 
-- [Run Unit and Lint Tests](#run-unit-and-lint-tests)
-- [Deploy Greenplum for Kubernetes on Minikube](#deploy-greenplum-for-kubernetes-on-minikube)
-  * [Setup](#setup)
-  * [Build](#build)
-  * [Deploy](#deploy)
-  * [Integration Test](#integration-test)
-- [Deploy Greenplum for Kubernetes on GKE](#deploy-greenplum-for-kubernetes-on-gke)
-  * [Setup](#setup-1)
-  * [Build](#build-1)
-  * [Deploy](#deploy-1)
-  * [Integration Test](#integration-test-1)
+- [Greenplum for Kubernetes Release](#greenplum-for-kubernetes-release)
+  - [Table of Contents](#table-of-contents)
+  - [Run Unit and Lint Tests](#run-unit-and-lint-tests)
+  - [Deploy Greenplum for Kubernetes on Minikube](#deploy-greenplum-for-kubernetes-on-minikube)
+    - [Setup](#setup)
+    - [Build](#build)
+    - [Deploy](#deploy)
+    - [Integration Test](#integration-test)
+  - [Deploy Greenplum for Kubernetes on GKE](#deploy-greenplum-for-kubernetes-on-gke)
+    - [Setup](#setup-1)
+    - [Build](#build-1)
+    - [Deploy](#deploy-1)
+    - [Integration Test](#integration-test-1)
 
 ## Run Unit and Lint Tests
 
